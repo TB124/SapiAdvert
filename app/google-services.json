@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "822897404115",
+    "firebase_url": "https://sapiadvert.firebaseio.com",
+    "project_id": "sapiadvert",
+    "storage_bucket": "sapiadvert.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822897404115:android:39f65f13515ea4ae",
+        "android_client_info": {
+          "package_name": "com.example.thomas.sapiadvert"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "822897404115-ha1n46e5h2dj0eo160ro69uute52uthm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEUFD__MHTDBUne9VgH0tee1ca5k4ZSlo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "822897404115-ha1n46e5h2dj0eo160ro69uute52uthm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
