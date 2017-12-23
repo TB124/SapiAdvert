@@ -1,54 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.thomas.sapiadvert.RegistrationActivity"
-    android:padding="10dp">
+    android:padding="10dp"
+    tools:context="com.example.thomas.sapiadvert.RegistrationActivity">
+
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/registerText"
-            android:text="User Register"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/profilePictureInput"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_gravity="center_horizontal"/>
+            app:srcCompat="@android:drawable/btn_star" />
 
         <EditText
+            android:id="@+id/firstNameInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:ems="10"
+            android:hint="Enter your first name"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/lastNameInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:ems="10"
+            android:hint="Enter your last name"
+            android:inputType="textPersonName" />
+
+        <EditText
             android:id="@+id/emailInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:hint="Enter your Email address"
             android:inputType="textEmailAddress" />
 
         <EditText
+            android:id="@+id/phoneNumberInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:ems="10"
+            android:hint="Enter you phone number"
+            android:inputType="phone" />
+
+        <EditText
             android:id="@+id/passwordInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:hint="Enter your Password"
             android:inputType="textPassword" />
 
-        <Button
+        <EditText
+            android:id="@+id/confirmPasswordInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="Register"
+            android:ems="10"
+            android:hint="Confirm password"
+            android:inputType="textPassword" />
+
+        <Button
             android:id="@+id/registerButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Register" />
 
         <TextView
-            android:textAlignment="center"
-            android:text="Sign in"
             android:id="@+id/signInTextView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="Sign in"
+            android:textAlignment="center" />
 
     </LinearLayout>
 </RelativeLayout>
