@@ -43,6 +43,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private ProgressDialog progressDialog;
 
     private FirebaseAuth firebaseAuth;
+    private TextView forgetPasswordTextView;
     //google login
     private SignInButton googleSignInButton;
     GoogleApiClient googleApiClient;
@@ -61,11 +62,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         emailInput = (EditText) findViewById(R.id.emailInput);
         passwordInput = (EditText) findViewById(R.id.passwordInput);
         registerTextView = (TextView) findViewById(R.id.registerTextView);
-
+        forgetPasswordTextView=(TextView) findViewById(R.id.forgetPasswordTextView);
         progressDialog = new ProgressDialog(this);
 
         loginButton.setOnClickListener(this);
         registerTextView.setOnClickListener(this);
+        forgetPasswordTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         ///google signg in
         googleSignInButton=(SignInButton) findViewById(R.id.google_sign_in_button);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

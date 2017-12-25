@@ -12,20 +12,33 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true">
 
+        <EditText
+            android:id="@+id/searchTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Search..."
+            android:inputType="textPersonName" />
+
         <TextView
             android:id="@+id/currentUserTextView"
-            android:text="Current User"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:text="Current User"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button
             android:id="@+id/signOutButton"
-            android:text="Sign Out"
-            android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Sign Out" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/advertismentRecylerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 </RelativeLayout>

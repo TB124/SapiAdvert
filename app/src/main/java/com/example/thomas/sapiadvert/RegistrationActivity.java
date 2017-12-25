@@ -179,7 +179,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                             DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().
                                     child("Users")
                                     .child(currentUser.getUid());
-                            databaseReference.setValue(datas);
+
                             StorageReference filepath=firebaseStorage.child("ProfilePictures").child(currentUser.getUid());
                             filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                 @Override
@@ -188,8 +188,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                                 }
                             });
 
-
-
+                            datas.put("ProfilePicture",filepath.getDownloadUrl().toString());
+                            databaseReference.setValue(datas);
                             ///
                             startMainActivity();
                         }
