@@ -29,6 +29,12 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button
+            android:id="@+id/editProfileButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Edit Profile"/>
+        <Button
             android:id="@+id/signOutButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -20,7 +20,8 @@
         </activity>
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".PasswordResetActivity"></activity>
+        <activity android:name=".PasswordResetActivity" />
+        <activity android:name=".EditProfileActivity"></activity>
     </application>
 
 </manifest>

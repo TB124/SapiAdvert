@@ -1,7 +1,6 @@
 package com.example.thomas.sapiadvert;
 
 import android.content.Intent;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -38,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseUser currentUser;
     private static final int RC_SIGN_IN = 123;
 
+    private Button editProfilButton;
+
     //Recycle view
     private List<Advertisment> advertismentList;
     private List<String> advertismentKeyList;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DatabaseReference databaseReference;
     private String tempProfilePictureUri=new String();
     //
-    //seeach
+    //search
     private EditText searchEditText;
     private List<Advertisment> searchedAdvertismentList;
     private List<String> searchedAdvertismentKeyList;
@@ -59,15 +60,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        if ( firebaseAuth.getCurrentUser() == null ){
-            backToLoginPage();
-        }
         currentUser = firebaseAuth.getCurrentUser();
+        if ( currentUser == null ) {
+            backToLoginPage();
+            return;
+        }
 
         currentUserTextView = (TextView) findViewById(R.id.currentUserTextView);
         currentUserTextView.setText("Hello "+currentUser.getEmail()+"!");
+
         signOutButton = (Button) findViewById(R.id.signOutButton);
         signOutButton.setOnClickListener(this);
+
+        editProfilButton = (Button) findViewById(R.id.editProfileButton);
+        editProfilButton.setOnClickListener(this);
 
         //RECYCLER VIEW
         advertismentRecyclerView=findViewById(R.id.advertismentRecylerView);
@@ -185,12 +191,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             firebaseAuth.signOut();
             backToLoginPage();
         }
+
+        if (view == editProfilButton) {
+            // Switch view
+            goToEditPage();
+        }
     }
 
     private void backToLoginPage(){
         finish();
         startActivity(new Intent(this, LoginActivity.class));
     }
+
     private void search(String s){
         searchedAdvertismentList.clear();
         searchedAdvertismentKeyList.clear();
@@ -206,6 +218,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         updateUI();
+    }
+
+    private void goToEditPage(){
+        finish();
+        startActivity(new Intent(this, EditProfileActivity.class));
     }
     //
     private void updateUI(){

@@ -106,6 +106,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View view) {
         if ( view == signInTextView ){
             //Login
+            backToLoginPage();
         }
 
         if ( view == registerButton ){
@@ -202,6 +203,11 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                         }
                     }
                 });
+    }
+
+    private void backToLoginPage(){
+        finish();
+        startActivity(new Intent(this, LoginActivity.class));
     }
 
     private void startMainActivity(){
