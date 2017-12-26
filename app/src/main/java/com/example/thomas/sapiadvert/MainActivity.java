@@ -12,9 +12,11 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -53,22 +55,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private List<Advertisment> searchedAdvertismentList;
     private List<String> searchedAdvertismentKeyList;
     //
+    //profile picture
+    private ImageView profilePicture;
+
+    //for teszt only
+    private Button logOutButton;
+    //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //profile piture
+        profilePicture=findViewById(R.id.profilePictureImageView);
+        logOutButton=findViewById(R.id.logOutButton);
+        logOutButton.setOnClickListener(this);
         firebaseAuth = FirebaseAuth.getInstance();
-        if ( firebaseAuth.getCurrentUser() == null ){
-            backToLoginPage();
-        }
-        currentUser = firebaseAuth.getCurrentUser();
+        currentUser= firebaseAuth.getCurrentUser();
 
+
+
+        /*
         currentUserTextView = (TextView) findViewById(R.id.currentUserTextView);
         currentUserTextView.setText("Hello "+currentUser.getEmail()+"!");
         signOutButton = (Button) findViewById(R.id.signOutButton);
         signOutButton.setOnClickListener(this);
-
+*/
         //RECYCLER VIEW
         advertismentRecyclerView=findViewById(R.id.advertismentRecylerView);
         advertismentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -176,15 +188,46 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+
+        if ( currentUser == null ){
+            // backToLoginPage();
+            profilePicture.setVisibility(View.GONE);
+
+        }
+        else{
+            databaseReference.child("Users").child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    UserInDatabase u=dataSnapshot.getValue(UserInDatabase.class);
+                    Glide.with(MainActivity.this).load(u.ProfilePicture).into(profilePicture);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+            profilePicture.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // startActivity(new Intent(this,));
+                }
+            });
+        }
+
     }
 
     @Override
     public void onClick(View view) {
-        if (view == signOutButton ){
+
+        if (view == logOutButton ){
+            finish();
+            startActivity(new Intent(this, AdvertismentUploadActivity.class));
             // Signing out
-            firebaseAuth.signOut();
-            backToLoginPage();
+           // firebaseAuth.signOut();
+           // backToLoginPage();
         }
+
     }
 
     private void backToLoginPage(){
