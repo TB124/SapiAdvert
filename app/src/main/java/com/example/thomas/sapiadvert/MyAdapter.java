@@ -1,6 +1,7 @@
 package com.example.thomas.sapiadvert;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,14 +45,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.detailText.setText(advertisment.getDetails());
         Glide.with(context).load(advertisment.getProfilePictureUri()).into(holder.profilePictureView);
         Glide.with(context).load(advertisment.getMainPictureUri()).into(holder.mainImageView);
-       // DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().
-               // child("Users")
-                //.child(advertisment.getCreatedBy());
-
-       // StorageReference filepath=firebaseStorage.child(databaseReference);
-       // Glide.with(context).load(new StorageReference());
-        //Glide.with(context).load).into(profilePictureInput);
-      //  holder.profilePictureView
+        holder.bind(advertisment);
 
     }
 
@@ -73,6 +67,27 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             detailText=itemView.findViewById(R.id.detailsText);
             profilePictureView=itemView.findViewById(R.id.profilePictureView);
             mainImageView=itemView.findViewById(R.id.mainImageView);
+
+        }
+        public void bind(final Advertisment ad){
+            profilePictureView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+            View.OnClickListener listener= new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent myIntent = new Intent(context,AdvertismentReadActivity.class);
+                    myIntent.putExtra("Advertisment",ad);
+                    context.startActivity(myIntent);
+                }
+            };
+            titleText.setOnClickListener(listener);
+            detailText.setOnClickListener(listener);
+            mainImageView.setOnClickListener(listener);
+
         }
     }
 }

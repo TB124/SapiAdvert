@@ -20,6 +20,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInApi;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -47,8 +48,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     //google login
     private SignInButton googleSignInButton;
     GoogleApiClient googleApiClient;
+    //
+    private TextView loginAsGuestTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -92,6 +97,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onClick(View view) {
                 signIn();
+            }
+        });
+
+        //
+        loginAsGuestTextView=findViewById(R.id.loginAsGuest);
+        loginAsGuestTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startMainActivity();
             }
         });
     }

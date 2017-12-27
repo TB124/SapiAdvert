@@ -59,6 +59,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     //Storage
     private StorageReference firebaseStorage;
     private Uri uri;
+    private   HashMap<String,String> datas;
     ///
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,12 +173,12 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
                             //Database
                             FirebaseUser currentUser=firebaseAuth.getCurrentUser();
-                            HashMap<String,String> datas=new HashMap<>();
+                            datas=new HashMap<>();
                             datas.put("FirstName",firstName);
                             datas.put("LastName",lastName);
                             datas.put("EmailAddress",emailAddress);
                             datas.put("PhoneNumber",phoneNumber);
-                            DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().
+                            final DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().
                                     child("Users")
                                     .child(currentUser.getUid());
 
@@ -185,14 +186,15 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                             filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                 @Override
                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    datas.put("ProfilePicture",taskSnapshot.getDownloadUrl().toString());
                                     Toast.makeText(RegistrationActivity.this,"Profile pic upload succes !",Toast.LENGTH_LONG).show();
+                                    databaseReference.setValue(datas);
+                                    startMainActivity();
                                 }
                             });
 
-                            datas.put("ProfilePicture",filepath.getDownloadUrl().toString());
-                            databaseReference.setValue(datas);
                             ///
-                            startMainActivity();
+
                         }
                         else{
                             // Registration was not successful

@@ -1,50 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.thomas.sapiadvert.MainActivity"
     android:padding="10dp">
-    <LinearLayout
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/advertismentRecylerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true">
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/searchTextView" />
 
-        <EditText
-            android:id="@+id/searchTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Search..."
-            android:inputType="textPersonName" />
+    <EditText
+        android:id="@+id/searchTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ad_read_profilePictureImageView"
+        android:layout_toStartOf="@+id/addNewAdvertismentButton"
+        android:ems="10"
+        android:hint="Search..."
+        android:inputType="textPersonName" />
 
-        <TextView
-            android:id="@+id/currentUserTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Current User"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+    <ImageView
+        android:id="@+id/ad_read_profilePictureImageView"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@android:drawable/btn_star" />
 
-        <Button
+    <Button
             android:id="@+id/editProfileButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Edit Profile"/>
         <Button
-            android:id="@+id/signOutButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Sign Out" />
+        android:id="@+id/logOutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="47dp"
+        android:text="Button" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/advertismentRecylerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+    <TextView
+        android:id="@+id/addNewAdvertismentButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/advertismentRecylerView"
+        android:layout_toStartOf="@+id/ad_read_profilePictureImageView"
+        android:text="Add" />
 
-    </LinearLayout>
 </RelativeLayout>

@@ -1,10 +1,37 @@
 package com.example.thomas.sapiadvert;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Szabi on 2017. 12. 24..
  */
 
-public class Advertisment {
+public class Advertisment implements Parcelable {
+
+    public Advertisment (){
+
+    }
+    protected Advertisment(Parcel in) {
+        title = in.readString();
+        details = in.readString();
+        createdBy = in.readString();
+        profilePictureUri = in.readString();
+        mainPictureUri = in.readString();
+    }
+
+    public static final Creator<Advertisment> CREATOR = new Creator<Advertisment>() {
+        @Override
+        public Advertisment createFromParcel(Parcel in) {
+            return new Advertisment(in);
+        }
+
+        @Override
+        public Advertisment[] newArray(int size) {
+            return new Advertisment[size];
+        }
+    };
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -56,5 +83,19 @@ public class Advertisment {
 
     public String getMainPictureUri() {
         return mainPictureUri;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(title);
+        parcel.writeString(details);
+        parcel.writeString(createdBy);
+        parcel.writeString(profilePictureUri);
+        parcel.writeString(mainPictureUri);
     }
 }
