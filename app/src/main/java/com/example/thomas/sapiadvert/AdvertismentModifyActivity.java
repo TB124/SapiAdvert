@@ -25,7 +25,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -33,21 +32,22 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 
-public class AdvertismentUploadActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class AdvertismentModifyActivity extends AppCompatActivity implements OnMapReadyCallback {
 
+    private Advertisment advertisment;
+    private String advertismentKey;
     private static final int GALLERY_INTENT =123 ;
     private EditText titleEditText;
     private EditText detailssEditText;
     private ImageView mainPictureImageView;
-    private Button postAdvertismentButton;
-    private Button backToMainButton;
+    private Button modifyAdvertismentButton;
     private StorageReference firebaseStorage;
     private FirebaseAuth firebaseAuth;
 
     private String title;
     private  String details;
     private Uri mainImage=null;
-    private   HashMap<String,String> datas;
+    private HashMap<String,String> datas;
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Toast.makeText(this, "Map is Ready", Toast.LENGTH_SHORT).show();
@@ -68,22 +68,22 @@ public class AdvertismentUploadActivity extends AppCompatActivity implements OnM
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_advertisment_upload);
+        setContentView(R.layout.activity_advertisment_modify);
+        advertisment= getIntent().getExtras().getParcelable("Advertisment");
+        advertismentKey=getIntent().getStringExtra("AdvertismentKey");
 
-        titleEditText=findViewById(R.id.titleEditText);
-        detailssEditText=findViewById(R.id.detailsEditText);
-        mainPictureImageView=findViewById(R.id.mainPictureImageView);
-        postAdvertismentButton=findViewById(R.id.postAdvertismentButton);
-        backToMainButton=findViewById(R.id.backToMainButton);
+        titleEditText=findViewById(R.id.ad_modify_titleEditText);
+        detailssEditText=findViewById(R.id.ad_modify_detailsEditText);
+        mainPictureImageView=findViewById(R.id.ad_modify_mainPictureImageView);
+        modifyAdvertismentButton=findViewById(R.id.ad_modify_modifyAdvertismentButton);
+
+        titleEditText.setText(advertisment.getTitle());
+        detailssEditText.setText(advertisment.getDetails());
+        Glide.with(AdvertismentModifyActivity.this).load(advertisment.getMainPictureUri()).into(mainPictureImageView);
+
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseStorage= FirebaseStorage.getInstance().getReference();
-        backToMainButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                returnToMain();
-            }
-        });
         mainPictureImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,45 +92,42 @@ public class AdvertismentUploadActivity extends AppCompatActivity implements OnM
                 startActivityForResult(intent,GALLERY_INTENT);
             }
         });
-        postAdvertismentButton.setOnClickListener(new View.OnClickListener() {
+        modifyAdvertismentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 title=titleEditText.getText().toString().trim();
                 details=detailssEditText.getText().toString().trim();
 
                 if(TextUtils.isEmpty(title)){
-                    Toast.makeText(AdvertismentUploadActivity.this,"Please enter a title !",Toast.LENGTH_LONG);
+                    Toast.makeText(AdvertismentModifyActivity.this,"Please enter a title !",Toast.LENGTH_LONG);
                     return;
                 }
                 if(TextUtils.isEmpty(details)){
-                    Toast.makeText(AdvertismentUploadActivity.this,"Please enter some details !",Toast.LENGTH_LONG);
+                    Toast.makeText(AdvertismentModifyActivity.this,"Please enter some details !",Toast.LENGTH_LONG);
                     return;
                 }
                 if(mainImage==null){
-                    Toast.makeText(AdvertismentUploadActivity.this,"Please select a picture !",Toast.LENGTH_LONG);
+                    Toast.makeText(AdvertismentModifyActivity.this,"Please select a picture !",Toast.LENGTH_LONG);
                     return;
                 }
 
-                FirebaseUser currentUser=firebaseAuth.getCurrentUser();
+
                 datas=new HashMap<>();
-                datas.put("CreatedBy",currentUser.getUid());
+                datas.put("CreatedBy",advertisment.getCreatedBy());
                 datas.put("Title",title);
                 datas.put("Details",details);
 
-                final String key=FirebaseDatabase.getInstance().getReference().
-                        child("Advertisments")
-                        .push().getKey();
 
-                StorageReference filepath=firebaseStorage.child("AdvertisementPictures").child(key);
+                StorageReference filepath=firebaseStorage.child("AdvertisementPictures").child(advertismentKey);
                 filepath.putFile(mainImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         datas.put("MainPicture",taskSnapshot.getDownloadUrl().toString());
-                        Toast.makeText(AdvertismentUploadActivity.this,"Main pic upload succes !",Toast.LENGTH_LONG).show();
+                        Toast.makeText(AdvertismentModifyActivity.this,"Main pic upload succes !",Toast.LENGTH_LONG).show();
 
                         FirebaseDatabase.getInstance().getReference().
                                 child("Advertisments")
-                                .child(key).setValue(datas);
+                                .child(advertismentKey).setValue(datas);
                         returnToMain();
 
                         //startMainActivity();
@@ -138,7 +135,7 @@ public class AdvertismentUploadActivity extends AppCompatActivity implements OnM
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(AdvertismentUploadActivity.this,"Error!:"+e,Toast.LENGTH_LONG).show();
+                        Toast.makeText(AdvertismentModifyActivity.this,"Error!:"+e,Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -158,7 +155,7 @@ public class AdvertismentUploadActivity extends AppCompatActivity implements OnM
                 mainImage=data.getData();
                 // StorageReference filepath=firebaseStorage.child("ProfilePictures").
                 //Glide.with(this).load(uri).into(profilePictureInput);
-                Glide.with(AdvertismentUploadActivity.this).load(mainImage).into(mainPictureImageView);
+                Glide.with(AdvertismentModifyActivity.this).load(mainImage).into(mainPictureImageView);
                 //profilePictureInput.setImageURI(uri);
 
             }
@@ -167,9 +164,9 @@ public class AdvertismentUploadActivity extends AppCompatActivity implements OnM
 
     private void initMap(){
         Log.d(TAG, "initMap: initializing map");
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.ad_modify_map);
 
-        mapFragment.getMapAsync(AdvertismentUploadActivity.this);
+        mapFragment.getMapAsync(AdvertismentModifyActivity.this);
     }
 
     private void getLocationPermission(){

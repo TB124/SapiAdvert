@@ -1,7 +1,6 @@
 package com.example.thomas.sapiadvert;
 
 import android.content.Intent;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,8 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import static android.view.KeyEvent.KEYCODE_ENTER;
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseAuth firebaseAuth;
@@ -57,17 +54,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //
     //profile picture
     private ImageView profilePicture;
-
+    //
+    private TextView addNewAdvertismentButton;
     //for teszt only
     private Button logOutButton;
     //
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         //profile piture
-        profilePicture=findViewById(R.id.profilePictureImageView);
+        profilePicture=findViewById(R.id.ad_read_profilePictureImageView);
         logOutButton=findViewById(R.id.logOutButton);
         logOutButton.setOnClickListener(this);
         firebaseAuth = FirebaseAuth.getInstance();
@@ -188,11 +188,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-
+        addNewAdvertismentButton=findViewById(R.id.addNewAdvertismentButton);
         if ( currentUser == null ){
             // backToLoginPage();
             profilePicture.setVisibility(View.GONE);
-
+            addNewAdvertismentButton.setVisibility(View.GONE);
         }
         else{
             databaseReference.child("Users").child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -213,6 +213,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     // startActivity(new Intent(this,));
                 }
             });
+            addNewAdvertismentButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                   // finish();
+                    startActivity(new Intent(MainActivity.this, AdvertismentUploadActivity.class));
+                }
+            });
         }
 
     }
@@ -222,7 +229,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (view == logOutButton ){
             finish();
-            startActivity(new Intent(this, AdvertismentUploadActivity.class));
+            Advertisment ad=new Advertisment("Teszhirdetes","Desztdetails","HPThqE2j4WXeAeKcrjVINyvPnvi1",
+                    "https://firebasestorage.googleapis.com/v0/b/sapiadvert.appspot.com/o/ProfilePictures%2FHPThqE2j4WXeAeKcrjVINyvPnvi1?alt=media&token=31c35abb-31d2-4e17-a05c-cff78f740374",
+                    "https://firebasestorage.googleapis.com/v0/b/sapiadvert.appspot.com/o/AdvertisementPictures%2F-L1NTkRfNqHRe3mSqXLJ?alt=media&token=3af2561c-d45d-45e6-83d9-4fdfeda49027"
+
+                    );
+            Intent intent=new Intent(this, AdvertismentModifyActivity.class);
+            intent.putExtra("Advertisment",ad);
+            intent.putExtra("AdvertismentKey","-L1NTkRfNqHRe3mSqXLJ");
+            startActivity(intent);
+
             // Signing out
            // firebaseAuth.signOut();
            // backToLoginPage();

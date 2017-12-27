@@ -18,14 +18,14 @@
         android:id="@+id/searchTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/profilePictureImageView"
-        android:layout_toStartOf="@+id/profilePictureImageView"
+        android:layout_alignBottom="@+id/ad_read_profilePictureImageView"
+        android:layout_toStartOf="@+id/addNewAdvertismentButton"
         android:ems="10"
         android:hint="Search..."
         android:inputType="textPersonName" />
 
     <ImageView
-        android:id="@+id/profilePictureImageView"
+        android:id="@+id/ad_read_profilePictureImageView"
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_alignParentEnd="true"
@@ -40,5 +40,13 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="47dp"
         android:text="Button" />
+
+    <TextView
+        android:id="@+id/addNewAdvertismentButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/advertismentRecylerView"
+        android:layout_toStartOf="@+id/ad_read_profilePictureImageView"
+        android:text="Add" />
 
 </RelativeLayout>
