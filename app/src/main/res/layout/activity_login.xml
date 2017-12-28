@@ -23,7 +23,7 @@
 
         <TextView
             android:id="@+id/loginText"
-            android:text="User Login"
+            android:text="@string/user_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -34,7 +34,7 @@
             android:id="@+id/emailInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter your Email address"
+            android:hint="@string/enter_your_email_address"
             android:inputType="textEmailAddress" />
 
         <EditText
@@ -42,19 +42,19 @@
             android:id="@+id/passwordInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter your Password"
+            android:hint="@string/enter_your_password"
             android:inputType="textPassword" />
 
         <Button
             android:layout_margin="10dp"
-            android:text="Login"
+            android:text="@string/login"
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
             android:textAlignment="center"
-            android:text="Register"
+            android:text="@string/register"
             android:id="@+id/registerTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -68,7 +68,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/google_sign_in_button"
         android:layout_marginEnd="11dp"
-        android:text="Forget you password ?" />
+        android:text="@string/forgot_you_password" />
 
     <TextView
         android:id="@+id/loginAsGuest"
@@ -77,6 +77,6 @@
         android:layout_alignBottom="@+id/google_sign_in_button"
         android:layout_alignEnd="@+id/forgetPasswordTextView"
         android:layout_alignStart="@+id/forgetPasswordTextView"
-        android:text="Log in as guest" />
+        android:text="@string/log_in_as_guest" />
 
 </RelativeLayout>

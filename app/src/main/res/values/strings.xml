@@ -14,5 +14,25 @@
     <string name="enter_your_phone_number">Enter your phone number</string>
     <string name="profile_picture">Profile picture:</string>
     <string name="save_changes">Save Changes</string>
+    <string name="forgot_you_password">Forgot you password ?</string>
+    <string name="log_in_as_guest">Log in as guest</string>
+    <string name="user_login">User Login</string>
+    <string name="enter_your_password">Enter your Password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="log_out">Log out</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="view_profile">View Profile</string>
+    <string name="add">Add</string>
+    <string name="search">Search…</string>
+    <string name="reset_password">Reset password</string>
     <string name="change_password">Change Password</string>
+    <string name="enter_your_old_password">Enter your old password</string>
+    <string name="enter_your_new_password">Enter your new password</string>
+    <string name="confirm_new_password">Confirm new password</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="enter_an_email_address">Enter an email address</string>
+    <string name="email_sent">Email sent</string>
+    <string name="password_reset_failed">Password reset failed</string>
 </resources>

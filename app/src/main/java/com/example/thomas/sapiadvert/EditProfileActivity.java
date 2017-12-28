@@ -28,6 +28,7 @@ import java.net.URI;
 
 public class EditProfileActivity extends Activity implements View.OnClickListener {
     private final String tag = "EditProfile Activity:";
+    private final String defaultProfilePicture = "https://firebasestorage.googleapis.com/v0/b/sapiadvert.appspot.com/o/ProfilePictures%2Fprofile.png?alt=media&token=b2e66197-1724-49b4-8b30-077f50ae72c1";
     private static final int GALLERY_INTENT =3 ;
     // Buttons
     private Button saveButton;
@@ -56,18 +57,18 @@ public class EditProfileActivity extends Activity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
         // Buttons
-        cancelButton = (Button) findViewById(R.id.cancelButton);
+        cancelButton = findViewById(R.id.cancelButton);
         cancelButton.setOnClickListener(this);
-        saveButton = (Button) findViewById(R.id.saveButton);
+        saveButton = findViewById(R.id.saveButton);
         saveButton.setOnClickListener(this);
-        changePasswordButton = (Button) findViewById(R.id.changePasswordButton);
+        changePasswordButton = findViewById(R.id.changePasswordButton);
         changePasswordButton.setOnClickListener(this);
         // EditTexts
-        firstNameInput = (EditText) findViewById(R.id.firstNameInput);
-        lastNameInput = (EditText) findViewById(R.id.lastNameInput);
-        emailInput = (EditText) findViewById(R.id.emailInput);
-        phoneNumberInput = (EditText) findViewById(R.id.phoneNumberInput);
-        profilePictureInput=(ImageView) findViewById(R.id.profilePictureInput);
+        firstNameInput = findViewById(R.id.firstNameInput);
+        lastNameInput = findViewById(R.id.lastNameInput);
+        emailInput = findViewById(R.id.emailInput);
+        phoneNumberInput = findViewById(R.id.phoneNumberInput);
+        profilePictureInput= findViewById(R.id.profilePictureInput);
         profilePictureInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,12 +91,21 @@ public class EditProfileActivity extends Activity implements View.OnClickListene
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         UserInDatabase temp = dataSnapshot.getValue(UserInDatabase.class);
-                        firstNameInput.setText(temp.FirstName);
-                        lastNameInput.setText(temp.LastName);
-                        emailInput.setText(temp.EmailAddress);
-                        phoneNumberInput.setText(temp.PhoneNumber);
-                        Glide.with(EditProfileActivity.this).load(temp.ProfilePicture).into(profilePictureInput);
-                        profilePictureTemp = temp.ProfilePicture;
+                        if (temp != null ) {
+                            firstNameInput.setText(temp.FirstName);
+                            lastNameInput.setText(temp.LastName);
+                            emailInput.setText(temp.EmailAddress);
+                            phoneNumberInput.setText(temp.PhoneNumber);
+                            if (temp.ProfilePicture != null ) {
+                                Glide.with(EditProfileActivity.this).load(temp.ProfilePicture).into(profilePictureInput);
+                                profilePictureTemp = temp.ProfilePicture;
+                            } else {
+                                Glide.with(EditProfileActivity.this).load(defaultProfilePicture).into(profilePictureInput);
+                                profilePictureTemp = defaultProfilePicture;
+                            }
+                        } else {
+                            Glide.with(EditProfileActivity.this).load(defaultProfilePicture).into(profilePictureInput);
+                        }
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
@@ -125,9 +135,6 @@ public class EditProfileActivity extends Activity implements View.OnClickListene
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         data.ProfilePicture = taskSnapshot.getDownloadUrl().toString();
-                        if (data.ProfilePicture == null) {
-                            data.ProfilePicture = "";
-                        }
                         databaseReference.setValue(data);
                     }
                 });

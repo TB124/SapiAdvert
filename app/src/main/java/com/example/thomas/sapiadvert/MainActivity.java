@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ///
     //Database
     private DatabaseReference databaseReference;
-    private String tempProfilePictureUri=new String();
+    private String tempProfilePictureUri= "";
     //search
     private EditText searchEditText;
     private List<Advertisment> searchedAdvertismentList;
@@ -62,22 +62,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // profile picture
-        profilePicture=findViewById(R.id.ad_read_profilePictureImageView);
+        profilePicture= findViewById(R.id.ad_read_profilePictureImageView);
         // Log out
         logOutButton=findViewById(R.id.logOutButton);
         logOutButton.setOnClickListener(this);
         // Firebase
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
-        if ( currentUser == null ) {
+        /*if ( currentUser == null ) {
             backToLoginPage();
             return;
-        }
+        }*/
         // View Profile TEST
-        viewProfileButton = (Button) findViewById(R.id.viewProfileButton);
+        viewProfileButton = findViewById(R.id.viewProfileButton);
         viewProfileButton.setOnClickListener(this);
         ////////
-        editProfileButton = (Button) findViewById(R.id.editProfileButton);
+        editProfileButton = findViewById(R.id.editProfileButton);
         editProfileButton.setOnClickListener(this);
         //RECYCLER VIEW
         advertismentRecyclerView=findViewById(R.id.advertismentRecylerView);
@@ -101,39 +101,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 final AdvertismentInDatabase tempAd=dataSnapshot.getValue(AdvertismentInDatabase.class);
                 final String key=dataSnapshot.getKey();
-                databaseReference.child("Users").
-                        child(tempAd.CreatedBy).
-                        addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                UserInDatabase t=dataSnapshot.getValue(UserInDatabase.class);
-                                tempProfilePictureUri=t.ProfilePicture;
-                                Log.i(tag, "CreatedBy: "+tempAd.CreatedBy);
-                                Log.i(tag,"Title: "+tempAd.Title);
-                                Log.i(tag,"Details: "+tempAd.Details);
-                                Log.i(tag,"ProfilePicture: "+tempProfilePictureUri);
-                                advertismentList.add(new Advertisment(
-                                        tempAd.Title,
-                                        tempAd.Details,
-                                        tempAd.CreatedBy,
-                                        tempProfilePictureUri,
-                                        tempAd.MainPicture,
-                                        tempAd.Longitude,
-                                        tempAd.Latitude
-                                        )
-                                );
-                                advertismentKeyList.add(key);
-                                //myHandler.post(updateRunnable);
-                               // updateUI();
-                            }
+                if (tempAd != null) {
+                    databaseReference.child("Users").
+                            child(tempAd.CreatedBy).
+                            addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    UserInDatabase t=dataSnapshot.getValue(UserInDatabase.class);
+                                    if (t != null) {
+                                        tempProfilePictureUri = t.ProfilePicture;
+                                        Log.i(tag, "CreatedBy: " + tempAd.CreatedBy);
+                                        Log.i(tag, "Title: " + tempAd.Title);
+                                        Log.i(tag, "Details: " + tempAd.Details);
+                                        Log.i(tag, "ProfilePicture: " + tempProfilePictureUri);
+                                        advertismentList.add(new Advertisment(
+                                                tempAd.Title,
+                                                tempAd.Details,
+                                                tempAd.CreatedBy,
+                                                tempProfilePictureUri,
+                                                tempAd.MainPicture,
+                                                tempAd.Longitude,
+                                                tempAd.Latitude
+                                        ));
+                                        advertismentKeyList.add(key);
+                                        //myHandler.post(updateRunnable);
+                                        // updateUI();
+                                    }
+                                }
 
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-                                Log.i(tag, "PROBAAAA FAILED");
-                                tempProfilePictureUri=null;
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    Log.i(tag, "PROBAAAA FAILED");
+                                    tempProfilePictureUri=null;
 
-                            }
-                        });
+                                }
+                            });
+                }
 
                 //
             }
@@ -200,7 +203,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     UserInDatabase u=dataSnapshot.getValue(UserInDatabase.class);
-                    Glide.with(MainActivity.this).load(u.ProfilePicture).into(profilePicture);
+                    if (u != null) {
+                        Glide.with(MainActivity.this).load(u.ProfilePicture).into(profilePicture);
+                    }
                 }
 
                 @Override

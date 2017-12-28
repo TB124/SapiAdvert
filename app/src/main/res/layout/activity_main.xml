@@ -21,7 +21,7 @@
         android:layout_alignBottom="@+id/ad_read_profilePictureImageView"
         android:layout_toStartOf="@+id/addNewAdvertismentButton"
         android:ems="10"
-        android:hint="Search..."
+        android:hint="@string/search"
         android:inputType="textPersonName" />
 
     <ImageView
@@ -30,28 +30,30 @@
         android:layout_height="65dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        app:srcCompat="@android:drawable/btn_star" />
+        app:srcCompat="@android:drawable/btn_star"
+        android:contentDescription="@string/profile_picture" />
 
     <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/advertismentRecylerView">
         <Button
             android:id="@+id/logOutButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Log out" />
+            android:text="@string/log_out" />
         <Button
             android:id="@+id/editProfileButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Edit Profile"/>
+            android:text="@string/edit_profile"/>
         <Button
             android:id="@+id/viewProfileButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="View Profile"/>
+            android:text="@string/view_profile"/>
     </GridLayout>
 
     <TextView
@@ -60,6 +62,6 @@
         android:layout_height="50dp"
         android:layout_above="@+id/advertismentRecylerView"
         android:layout_toStartOf="@+id/ad_read_profilePictureImageView"
-        android:text="Add" />
+        android:text="@string/add" />
 
 </RelativeLayout>

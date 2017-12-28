@@ -63,23 +63,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startMainActivity();
         }
 
-        loginButton = (Button) findViewById(R.id.loginButton);
-        emailInput = (EditText) findViewById(R.id.emailInput);
-        passwordInput = (EditText) findViewById(R.id.passwordInput);
-        registerTextView = (TextView) findViewById(R.id.registerTextView);
-        forgetPasswordTextView=(TextView) findViewById(R.id.forgetPasswordTextView);
+        loginButton = findViewById(R.id.loginButton);
+        emailInput = findViewById(R.id.emailInput);
+        passwordInput = findViewById(R.id.passwordInput);
+        registerTextView = findViewById(R.id.registerTextView);
+        forgetPasswordTextView= findViewById(R.id.forgetPasswordTextView);
         progressDialog = new ProgressDialog(this);
 
         loginButton.setOnClickListener(this);
         registerTextView.setOnClickListener(this);
-        forgetPasswordTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-        ///google signg in
-        googleSignInButton=(SignInButton) findViewById(R.id.google_sign_in_button);
+        forgetPasswordTextView.setOnClickListener(this);
+        ///google sign in
+        googleSignInButton= findViewById(R.id.google_sign_in_button);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -122,6 +117,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             //Register
             finish();
             startActivity( new Intent(this, RegistrationActivity.class));
+        }
+
+        if ( view == forgetPasswordTextView ){
+            ForgotPassword dialog = new ForgotPassword(this);
+            dialog.show();
         }
     }
 
