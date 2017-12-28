@@ -117,7 +117,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                         tempAd.Details,
                                         tempAd.CreatedBy,
                                         tempProfilePictureUri,
-                                        tempAd.MainPicture)
+                                        tempAd.MainPicture,
+                                        tempAd.Longitude,
+                                        tempAd.Latitude
+                                        )
                                 );
                                 advertismentKeyList.add(key);
                                 //myHandler.post(updateRunnable);

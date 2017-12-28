@@ -18,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -33,51 +35,60 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 
-public class AdvertismentUploadActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class AdvertismentUploadActivity extends AppCompatActivity {
 
     private static final int GALLERY_INTENT =123 ;
+    private static final int PLACE_PICKER_REQUEST = 1;
     private EditText titleEditText;
     private EditText detailssEditText;
     private ImageView mainPictureImageView;
     private Button postAdvertismentButton;
     private Button backToMainButton;
+    private Button selectLocationButton;
     private StorageReference firebaseStorage;
     private FirebaseAuth firebaseAuth;
 
-    private String title;
-    private  String details;
+
     private Uri mainImage=null;
-    private   HashMap<String,String> datas;
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        Toast.makeText(this, "Map is Ready", Toast.LENGTH_SHORT).show();
-        Log.d(TAG, "onMapReady: map is ready");
-        mMap = googleMap;
-    }
 
     private static final String TAG = "MapActivity";
 
-    private static final String FINE_LOCATION = android.Manifest.permission.ACCESS_FINE_LOCATION;
-    private static final String COURSE_LOCATION = android.Manifest.permission.ACCESS_COARSE_LOCATION;
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
+    private boolean locationSelected=false;
 
-    //vars
-    private Boolean mLocationPermissionsGranted = false;
-    private GoogleMap mMap;
-
+///
+AdvertismentInDatabase ad;
+    ///
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advertisment_upload);
 
+        ad=new AdvertismentInDatabase();
         titleEditText=findViewById(R.id.titleEditText);
         detailssEditText=findViewById(R.id.detailsEditText);
         mainPictureImageView=findViewById(R.id.mainPictureImageView);
         postAdvertismentButton=findViewById(R.id.postAdvertismentButton);
         backToMainButton=findViewById(R.id.backToMainButton);
+        selectLocationButton=findViewById(R.id.selectLocationButton);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseStorage= FirebaseStorage.getInstance().getReference();
+
+        selectLocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+
+                try {
+                    startActivityForResult(builder.build(AdvertismentUploadActivity.this), PLACE_PICKER_REQUEST);
+                }
+                catch(Throwable ex){
+
+                }
+            }
+        });
+
         backToMainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,27 +106,29 @@ public class AdvertismentUploadActivity extends AppCompatActivity implements OnM
         postAdvertismentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                title=titleEditText.getText().toString().trim();
-                details=detailssEditText.getText().toString().trim();
+                ad.Title=titleEditText.getText().toString().trim();
+                ad.Details=detailssEditText.getText().toString().trim();
 
-                if(TextUtils.isEmpty(title)){
-                    Toast.makeText(AdvertismentUploadActivity.this,"Please enter a title !",Toast.LENGTH_LONG);
+                if(TextUtils.isEmpty(ad.Title)){
+                    Toast.makeText(AdvertismentUploadActivity.this,"Please enter a title !",Toast.LENGTH_LONG).show();
                     return;
                 }
-                if(TextUtils.isEmpty(details)){
-                    Toast.makeText(AdvertismentUploadActivity.this,"Please enter some details !",Toast.LENGTH_LONG);
+                if(TextUtils.isEmpty(ad.Details)){
+                    Toast.makeText(AdvertismentUploadActivity.this,"Please enter some details !",Toast.LENGTH_LONG).show();
                     return;
                 }
                 if(mainImage==null){
-                    Toast.makeText(AdvertismentUploadActivity.this,"Please select a picture !",Toast.LENGTH_LONG);
+                    Toast.makeText(AdvertismentUploadActivity.this,"Please select a picture !",Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(!locationSelected){
+                    Toast.makeText(AdvertismentUploadActivity.this,"Please select a location !",Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 FirebaseUser currentUser=firebaseAuth.getCurrentUser();
-                datas=new HashMap<>();
-                datas.put("CreatedBy",currentUser.getUid());
-                datas.put("Title",title);
-                datas.put("Details",details);
+
+                ad.CreatedBy=currentUser.getUid();
 
                 final String key=FirebaseDatabase.getInstance().getReference().
                         child("Advertisments")
@@ -125,12 +138,11 @@ public class AdvertismentUploadActivity extends AppCompatActivity implements OnM
                 filepath.putFile(mainImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        datas.put("MainPicture",taskSnapshot.getDownloadUrl().toString());
+                        ad.MainPicture=taskSnapshot.getDownloadUrl().toString();
                         Toast.makeText(AdvertismentUploadActivity.this,"Main pic upload succes !",Toast.LENGTH_LONG).show();
-
                         FirebaseDatabase.getInstance().getReference().
                                 child("Advertisments")
-                                .child(key).setValue(datas);
+                                .child(key).setValue(ad);
                         returnToMain();
 
                         //startMainActivity();
@@ -143,7 +155,7 @@ public class AdvertismentUploadActivity extends AppCompatActivity implements OnM
                 });
             }
         });
-        getLocationPermission();
+
     }
     private void returnToMain(){
         finish();
@@ -152,69 +164,32 @@ public class AdvertismentUploadActivity extends AppCompatActivity implements OnM
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
-        if (requestCode == GALLERY_INTENT) {
-            // Make sure the request was successful
-            if (resultCode == RESULT_OK) {
-                mainImage=data.getData();
-                // StorageReference filepath=firebaseStorage.child("ProfilePictures").
-                //Glide.with(this).load(uri).into(profilePictureInput);
-                Glide.with(AdvertismentUploadActivity.this).load(mainImage).into(mainPictureImageView);
-                //profilePictureInput.setImageURI(uri);
-
-            }
-        }
-    }
-
-    private void initMap(){
-        Log.d(TAG, "initMap: initializing map");
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-
-        mapFragment.getMapAsync(AdvertismentUploadActivity.this);
-    }
-
-    private void getLocationPermission(){
-        Log.d(TAG, "getLocationPermission: getting location permissions");
-        String[] permissions = {android.Manifest.permission.ACCESS_FINE_LOCATION,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION};
-
-        if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-            if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                    COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-                mLocationPermissionsGranted = true;
-            }else{
-                ActivityCompat.requestPermissions(this,
-                        permissions,
-                        LOCATION_PERMISSION_REQUEST_CODE);
-            }
-        }else{
-            ActivityCompat.requestPermissions(this,
-                    permissions,
-                    LOCATION_PERMISSION_REQUEST_CODE);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Log.d(TAG, "onRequestPermissionsResult: called.");
-        mLocationPermissionsGranted = false;
-
-        switch(requestCode){
-            case LOCATION_PERMISSION_REQUEST_CODE:{
-                if(grantResults.length > 0){
-                    for(int i = 0; i < grantResults.length; i++){
-                        if(grantResults[i] != PackageManager.PERMISSION_GRANTED){
-                            mLocationPermissionsGranted = false;
-                            Log.d(TAG, "onRequestPermissionsResult: permission failed");
-                            return;
-                        }
-                    }
-                    Log.d(TAG, "onRequestPermissionsResult: permission granted");
-                    mLocationPermissionsGranted = true;
-                    //initialize our map
-                    initMap();
+        switch (requestCode){
+            case GALLERY_INTENT:{
+                if (resultCode == RESULT_OK) {
+                    mainImage = data.getData();
+                    Glide.with(AdvertismentUploadActivity.this).load(mainImage).into(mainPictureImageView);
+                    break;
                 }
             }
+            case PLACE_PICKER_REQUEST:{
+                if (resultCode == RESULT_OK) {
+                    locationSelected=true;
+                    Place place = PlacePicker.getPlace(data, this);
+                    String toastMsg = String.format("Place: %s", place.getName());
+                    Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+                    ad.Longitude=place.getLatLng().longitude;
+                    ad.Latitude=place.getLatLng().latitude;
+
+
+                }
+
+                break;
+            }
+
         }
+
     }
+
+
 }
