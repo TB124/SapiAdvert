@@ -130,7 +130,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                         tempAd.Details,
                                         tempAd.CreatedBy,
                                         tempProfilePictureUri,
-                                        tempAd.MainPicture)
+                                        tempAd.MainPicture,
+                                        tempAd.Longitude,
+                                        tempAd.Latitude
+                                        )
                                 );
                                 advertismentKeyList.add(key);
                                 //myHandler.post(updateRunnable);
@@ -243,7 +246,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Advertisment ad=new Advertisment("Teszhirdetes","Desztdetails","HPThqE2j4WXeAeKcrjVINyvPnvi1",
                     "https://firebasestorage.googleapis.com/v0/b/sapiadvert.appspot.com/o/ProfilePictures%2FHPThqE2j4WXeAeKcrjVINyvPnvi1?alt=media&token=31c35abb-31d2-4e17-a05c-cff78f740374",
                     "https://firebasestorage.googleapis.com/v0/b/sapiadvert.appspot.com/o/AdvertisementPictures%2F-L1NTkRfNqHRe3mSqXLJ?alt=media&token=3af2561c-d45d-45e6-83d9-4fdfeda49027"
-
+                    ,0,0
                     );
             Intent intent=new Intent(this, AdvertismentModifyActivity.class);
             intent.putExtra("Advertisment",ad);

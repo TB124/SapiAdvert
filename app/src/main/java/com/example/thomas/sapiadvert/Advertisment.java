@@ -18,6 +18,8 @@ public class Advertisment implements Parcelable {
         createdBy = in.readString();
         profilePictureUri = in.readString();
         mainPictureUri = in.readString();
+        longitude=Double.parseDouble(in.readString());
+        latitude=Double.parseDouble(in.readString());
     }
 
     public static final Creator<Advertisment> CREATOR = new Creator<Advertisment>() {
@@ -57,12 +59,22 @@ public class Advertisment implements Parcelable {
     private String createdBy;
     private String profilePictureUri;
     private String mainPictureUri;
-    public Advertisment(String title, String details, String createdBy, String profilePictureUri, String mainPictureUri) {
+    private double longitude;
+    private double latitude;
+    public Advertisment(String title,
+                        String details,
+                        String createdBy,
+                        String profilePictureUri,
+                        String mainPictureUri,
+                        double longitude,
+                        double latitude) {
         this.title = title;
         this.details = details;
         this.createdBy = createdBy;
         this.profilePictureUri = profilePictureUri;
         this.mainPictureUri = mainPictureUri;
+        this.longitude=longitude;
+        this.latitude=latitude;
     }
 
     public String getTitle() {
@@ -97,5 +109,15 @@ public class Advertisment implements Parcelable {
         parcel.writeString(createdBy);
         parcel.writeString(profilePictureUri);
         parcel.writeString(mainPictureUri);
+        parcel.writeString(Double.toString(longitude));
+        parcel.writeString(Double.toString(latitude));
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
     }
 }
