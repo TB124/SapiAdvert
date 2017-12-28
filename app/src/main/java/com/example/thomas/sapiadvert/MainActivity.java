@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseUser currentUser;
     private Button editProfileButton;
     //Recycle view
-    private List<Advertisment> advertismentList;
-    private List<String> advertismentKeyList;
+    public static List<Advertisment> advertismentList;
+    public static List<String> advertismentKeyList;
     private RecyclerView advertismentRecyclerView;
     private RecyclerView.Adapter adapter;
     ///
@@ -211,7 +211,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             profilePicture.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // startActivity(new Intent(this,));
+                    Intent intent=new Intent(MainActivity.this,EditProfileActivity.class);
+                     startActivity(intent);
                 }
             });
             addNewAdvertismentButton.setOnClickListener(new View.OnClickListener() {
@@ -236,7 +237,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (view == editProfileButton) {
             // Switch view
-            goToEditPage();
+            startActivity(new Intent(MainActivity.this, ViewMyAdvertismentsActivity.class));
+            //TODO TESSZTRE,IRD MAJD VISSZA
+           // goToEditPage();
         }
 
         if (view == viewProfileButton){

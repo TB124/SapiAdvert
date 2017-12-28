@@ -10,42 +10,41 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
 /**
- * Created by Szabi on 2017. 12. 24..
+ * Created by Szabi on 2017. 12. 28..
  */
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+public class MyAdvertismentsAdapter  extends RecyclerView.Adapter<MyAdvertismentsAdapter.ViewHolder>{
 
-    private List<Advertisment> advertismentList;
+    private List<AdvertismentMy> advertismentList;
+    private List<String> advertismentKeyList;
     private Context context;
     private StorageReference firebaseStorage= FirebaseStorage.getInstance().getReference();
-    public MyAdapter(List<Advertisment> advertismentList, Context context) {
+
+    public MyAdvertismentsAdapter(List<AdvertismentMy> advertismentList, List<String> advertismentKeyList, Context context) {
         this.advertismentList = advertismentList;
+        this.advertismentKeyList = advertismentKeyList;
         this.context = context;
     }
 
     @Override
-    public  ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.addvertisment_item,parent,false);
-        return new ViewHolder(v);
+    public MyAdvertismentsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.myadvertisment_item,parent,false);
+        return new MyAdvertismentsAdapter.ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        Advertisment advertisment = advertismentList.get(position);
+    public void onBindViewHolder(MyAdvertismentsAdapter.ViewHolder holder, int position) {
+        AdvertismentMy advertisment = advertismentList.get(position);
         holder.titleText.setText(advertisment.getTitle());
         holder.detailText.setText(advertisment.getDetails());
-        Glide.with(context).load(advertisment.getProfilePictureUri()).into(holder.profilePictureView);
         Glide.with(context).load(advertisment.getMainPictureUri()).into(holder.mainImageView);
-        holder.bind(advertisment);
+        holder.bind(advertisment,advertismentKeyList.get(position));
 
     }
 
@@ -58,38 +57,29 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         public TextView titleText;
         public TextView detailText;
-        public ImageView profilePictureView;
         public ImageView mainImageView;
         public ViewHolder(View itemView) {
             super(itemView);
 
-            titleText=itemView.findViewById(R.id.titleText);
-            detailText=itemView.findViewById(R.id.detailsText);
-            profilePictureView=itemView.findViewById(R.id.profilePictureView);
-            mainImageView=itemView.findViewById(R.id.mainImageView);
+            titleText=itemView.findViewById(R.id.my_ad_titleTextView);
+            detailText=itemView.findViewById(R.id.my_ad_detailsTextView);
+            mainImageView=itemView.findViewById(R.id.my_ad_mainImageImageView);
 
         }
-        public void bind(final Advertisment ad){
-            profilePictureView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent=new Intent(context,ViewProfileActivity.class);
-                    intent.putExtra("UserID",ad.getCreatedBy());
-                    context.startActivity(intent);
-                }
-            });
+        public void bind(final AdvertismentMy ad,final String key){
+
             View.OnClickListener listener= new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent myIntent = new Intent(context,AdvertismentReadActivity.class);
+                    Intent myIntent = new Intent(context,AdvertismentModifyActivity.class);
                     myIntent.putExtra("Advertisment",ad);
+                    myIntent.putExtra("AdvertismentKey",key);
                     context.startActivity(myIntent);
                 }
             };
             titleText.setOnClickListener(listener);
             detailText.setOnClickListener(listener);
             mainImageView.setOnClickListener(listener);
-
         }
     }
 }

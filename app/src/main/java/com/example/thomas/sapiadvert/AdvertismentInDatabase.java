@@ -14,6 +14,19 @@ public class  AdvertismentInDatabase {
     AdvertismentInDatabase(){
 
     }
+
+    @Override
+    public String toString() {
+        return "AdvertismentInDatabase{" +
+                "CreatedBy='" + CreatedBy + '\'' +
+                ", Title='" + Title + '\'' +
+                ", Details='" + Details + '\'' +
+                ", MainPicture='" + MainPicture + '\'' +
+                ", Longitude=" + Longitude +
+                ", Latitude=" + Latitude +
+                '}';
+    }
+
     AdvertismentInDatabase(String CreatedBy,
                            String Title,
                            String Details,
