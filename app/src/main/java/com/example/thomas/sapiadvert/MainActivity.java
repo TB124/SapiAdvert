@@ -30,15 +30,12 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
+    private final String tag = "MainActivity";
     private FirebaseAuth firebaseAuth;
-    private TextView currentUserTextView;
-    private Button signOutButton;
+    // private TextView currentUserTextView;
+    // private Button signOutButton;
     private FirebaseUser currentUser;
-    private static final int RC_SIGN_IN = 123;
-
-    private Button editProfilButton;
-
+    private Button editProfileButton;
     //Recycle view
     private List<Advertisment> advertismentList;
     private List<String> advertismentKeyList;
@@ -48,50 +45,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //Database
     private DatabaseReference databaseReference;
     private String tempProfilePictureUri=new String();
-    //
     //search
     private EditText searchEditText;
     private List<Advertisment> searchedAdvertismentList;
     private List<String> searchedAdvertismentKeyList;
-    //
     //profile picture
     private ImageView profilePicture;
     //
     private TextView addNewAdvertismentButton;
-    //for teszt only
     private Button logOutButton;
-    //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        //profile piture
+        // profile picture
         profilePicture=findViewById(R.id.ad_read_profilePictureImageView);
+        // Log out
         logOutButton=findViewById(R.id.logOutButton);
         logOutButton.setOnClickListener(this);
+        // Firebase
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
         if ( currentUser == null ) {
             backToLoginPage();
             return;
         }
-
-
-
         /*
         currentUserTextView = (TextView) findViewById(R.id.currentUserTextView);
         currentUserTextView.setText("Hello "+currentUser.getEmail()+"!");
-
         signOutButton = (Button) findViewById(R.id.signOutButton);
         signOutButton.setOnClickListener(this);
-*/
-
-        editProfilButton = (Button) findViewById(R.id.editProfileButton);
-        editProfilButton.setOnClickListener(this);
-
+        */
+        editProfileButton = (Button) findViewById(R.id.editProfileButton);
+        editProfileButton.setOnClickListener(this);
         //RECYCLER VIEW
         advertismentRecyclerView=findViewById(R.id.advertismentRecylerView);
         advertismentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -110,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         (databaseReference.child("Advertisments")).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Log.i("PROBAAAA","MIIIERRRRRRRRRRRRRRT");
+                Log.i(tag, "PROBAAAA MIIIERRRRRRRRRRRRRRT");
 
                final AdvertismentInDatabase tempAd=dataSnapshot.getValue(AdvertismentInDatabase.class);
                 final String key=dataSnapshot.getKey();
@@ -121,10 +108,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 UserInDatabase t=dataSnapshot.getValue(UserInDatabase.class);
                                 tempProfilePictureUri=t.ProfilePicture;
-                                Log.i("CreatedBy",tempAd.CreatedBy);
-                                Log.i("Title",tempAd.Title);
-                                Log.i("Details",tempAd.Details);
-                                Log.i("ProfilePicture",tempProfilePictureUri);
+                                Log.i(tag, "CreatedBy: "+tempAd.CreatedBy);
+                                Log.i(tag,"Title: "+tempAd.Title);
+                                Log.i(tag,"Details: "+tempAd.Details);
+                                Log.i(tag,"ProfilePicture: "+tempProfilePictureUri);
                                 advertismentList.add(new Advertisment(
                                         tempAd.Title,
                                         tempAd.Details,
@@ -139,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             @Override
                             public void onCancelled(DatabaseError databaseError) {
-                                Log.i("PROBAAAA","FAILED");
+                                Log.i(tag, "PROBAAAA FAILED");
                                 tempProfilePictureUri=null;
 
                             }
@@ -239,23 +226,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
 
         if (view == logOutButton ){
-            finish();
-            Advertisment ad=new Advertisment("Teszhirdetes","Desztdetails","HPThqE2j4WXeAeKcrjVINyvPnvi1",
-                    "https://firebasestorage.googleapis.com/v0/b/sapiadvert.appspot.com/o/ProfilePictures%2FHPThqE2j4WXeAeKcrjVINyvPnvi1?alt=media&token=31c35abb-31d2-4e17-a05c-cff78f740374",
-                    "https://firebasestorage.googleapis.com/v0/b/sapiadvert.appspot.com/o/AdvertisementPictures%2F-L1NTkRfNqHRe3mSqXLJ?alt=media&token=3af2561c-d45d-45e6-83d9-4fdfeda49027"
-
-                    );
-            Intent intent=new Intent(this, AdvertismentModifyActivity.class);
-            intent.putExtra("Advertisment",ad);
-            intent.putExtra("AdvertismentKey","-L1NTkRfNqHRe3mSqXLJ");
-            startActivity(intent);
-
             // Signing out
-           // firebaseAuth.signOut();
-           // backToLoginPage();
+           firebaseAuth.signOut();
+           backToLoginPage();
         }
 
-        if (view == editProfilButton) {
+        if (view == editProfileButton) {
             // Switch view
             goToEditPage();
         }

@@ -27,18 +27,21 @@ import com.google.firebase.storage.UploadTask;
 import java.net.URI;
 
 public class EditProfileActivity extends Activity implements View.OnClickListener {
-
+    private final String tag = "EditProfile Activity:";
     private static final int GALLERY_INTENT =3 ;
     // Buttons
     private Button saveButton;
     private Button cancelButton;
     private Button changePasswordButton;
+    // Change password dialog
+    private ChangePassword changePasswordDialog;
     // Edit Texts
     private EditText firstNameInput;
     private EditText lastNameInput;
     private EditText phoneNumberInput;
     private EditText emailInput;
     private ImageView profilePictureInput;
+    private String profilePictureTemp;
     // User
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
@@ -92,6 +95,7 @@ public class EditProfileActivity extends Activity implements View.OnClickListene
                         emailInput.setText(temp.EmailAddress);
                         phoneNumberInput.setText(temp.PhoneNumber);
                         Glide.with(EditProfileActivity.this).load(temp.ProfilePicture).into(profilePictureInput);
+                        profilePictureTemp = temp.ProfilePicture;
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
@@ -103,24 +107,34 @@ public class EditProfileActivity extends Activity implements View.OnClickListene
 
     private void updateProfile(){
         try {
-            final StorageReference filepath=firebaseStorage.child("ProfilePictures").child(currentUser.getUid());
-            filepath.putFile(profileURI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(EditProfileActivity.this,"Profile pic upload successfully!",Toast.LENGTH_LONG).show();
-                    Log.i("URI:", filepath.getDownloadUrl().toString());
-                }
-            });
-            databaseReference = FirebaseDatabase.getInstance().getReference();
-            databaseReference.child("Users").child(currentUser.getUid()).setValue(
-                    new UserInDatabase(
-                            emailInput.getText().toString().trim(),
-                            firstNameInput.getText().toString().trim(),
-                            lastNameInput.getText().toString().trim(),
-                            phoneNumberInput.getText().toString().trim(),
-                            filepath.getDownloadUrl().toString()
-                    )
+            final UserInDatabase data = new UserInDatabase(
+                    emailInput.getText().toString().trim(),
+                    firstNameInput.getText().toString().trim(),
+                    lastNameInput.getText().toString().trim(),
+                    phoneNumberInput.getText().toString().trim(),
+                    profilePictureTemp
             );
+
+            final DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().
+                    child("Users")
+                    .child(currentUser.getUid());
+
+            if ( profileURI != null ) {
+                StorageReference filepath = firebaseStorage.child("ProfilePictures").child(currentUser.getUid());
+                filepath.putFile(profileURI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        data.ProfilePicture = taskSnapshot.getDownloadUrl().toString();
+                        if (data.ProfilePicture == null) {
+                            data.ProfilePicture = "";
+                        }
+                        databaseReference.setValue(data);
+                    }
+                });
+            } else {
+                databaseReference.setValue(data);
+            }
+
             Toast.makeText(this, "Profile updated!",Toast.LENGTH_SHORT).show();
         }
         catch(Error e){
@@ -141,6 +155,11 @@ public class EditProfileActivity extends Activity implements View.OnClickListene
 
         if (view == saveButton) {
             updateProfile();
+        }
+
+        if (view == changePasswordButton) {
+            changePasswordDialog = new ChangePassword(this);
+            changePasswordDialog.show();
         }
     }
 

@@ -7,6 +7,13 @@
     tools:context="com.example.thomas.sapiadvert.MainActivity"
     android:padding="10dp">
 
+    <Button
+        android:id="@+id/editProfileButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Edit Profile"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/advertismentRecylerView"
         android:layout_width="match_parent"
@@ -33,12 +40,6 @@
         app:srcCompat="@android:drawable/btn_star" />
 
     <Button
-            android:id="@+id/editProfileButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Edit Profile"/>
-        <Button
         android:id="@+id/logOutButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

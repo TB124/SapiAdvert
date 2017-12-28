@@ -84,13 +84,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Profile picture:"
-            android:layout_gravity="center"
-            android:layout_marginBottom="-5dp"/>
+            android:layout_gravity="center" />
+
         <ImageView
             android:id="@+id/profilePictureInput"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="75dp"
-            app:srcCompat="@android:drawable/btn_star" />
+            app:srcCompat="@android:drawable/btn_star"
+            android:layout_gravity="center"/>
 
         <GridLayout
             android:layout_width="wrap_content"
@@ -100,12 +101,12 @@
                 android:id="@+id/saveButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Save"/>
+                android:text="Save Changes"/>
             <Button
                 android:id="@+id/cancelButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cancel"/>
+                android:text="Back"/>
         </GridLayout>
 
         <Button
