@@ -2,16 +2,21 @@ package com.example.thomas.sapiadvert;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * Created by Thomas on 2017-12-28.
@@ -50,8 +55,9 @@ public class ChangePassword extends Dialog implements View.OnClickListener {
 
     private void changePassword(){
         String oldPW = oldPassword.getText().toString().trim();
-        String newPW = newPassword.getText().toString().trim();
+        final String newPW = newPassword.getText().toString().trim();
         String confirmPW = confirmNewPassword.getText().toString().trim();
+        passwordErrorTextView.setTextColor(Color.RED);
         if (TextUtils.isEmpty(oldPW)){
             passwordErrorTextView.setText("Please enter old password");
             return;
@@ -60,17 +66,36 @@ public class ChangePassword extends Dialog implements View.OnClickListener {
             passwordErrorTextView.setText("Please enter new password");
             return;
         }
-        if (TextUtils.isEmpty(confirmPW)){
-            passwordErrorTextView.setText("Please confirm password");
+        if (!confirmPW.equals(newPW)){
+            passwordErrorTextView.setText("Passwords are not the same");
             return;
         }
         passwordErrorTextView.setText(" ");
-        // check password
+        // check password and change it
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        AuthCredential credential = EmailAuthProvider
+                .getCredential(user.getEmail(), oldPW);
 
-        // change password
-
+        user.reauthenticate(credential)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            user.updatePassword(newPW).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        passwordErrorTextView.setTextColor(Color.BLUE);
+                                        passwordErrorTextView.setText("Password updated");
+                                    }
+                                }
+                            });
+                        } else {
+                            passwordErrorTextView.setText("Old password is not correct");
+                        }
+                    }
+                });
         // back to edit page
-        dismiss();
     }
 
     @Override

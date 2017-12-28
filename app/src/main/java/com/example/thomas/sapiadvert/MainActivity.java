@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //
     private TextView addNewAdvertismentButton;
     private Button logOutButton;
+    // TEST
+    private Button viewProfileButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +73,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             backToLoginPage();
             return;
         }
-        /*
-        currentUserTextView = (TextView) findViewById(R.id.currentUserTextView);
-        currentUserTextView.setText("Hello "+currentUser.getEmail()+"!");
-        signOutButton = (Button) findViewById(R.id.signOutButton);
-        signOutButton.setOnClickListener(this);
-        */
+        // View Profile TEST
+        viewProfileButton = (Button) findViewById(R.id.viewProfileButton);
+        viewProfileButton.setOnClickListener(this);
+        ////////
         editProfileButton = (Button) findViewById(R.id.editProfileButton);
         editProfileButton.setOnClickListener(this);
         //RECYCLER VIEW
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Log.i(tag, "PROBAAAA MIIIERRRRRRRRRRRRRRT");
 
-               final AdvertismentInDatabase tempAd=dataSnapshot.getValue(AdvertismentInDatabase.class);
+                final AdvertismentInDatabase tempAd=dataSnapshot.getValue(AdvertismentInDatabase.class);
                 final String key=dataSnapshot.getKey();
                 databaseReference.child("Users").
                         child(tempAd.CreatedBy).
@@ -236,11 +236,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             goToEditPage();
         }
 
+        if (view == viewProfileButton){
+            viewProfilePage("HPThqE2j4WXeAeKcrjVINyvPnvi1");
+        }
+
+    }
+
+    private void viewProfilePage(String userID){
+        finish();
+        Intent viewProfile = new Intent(this, ViewProfileActivity.class);
+        viewProfile.putExtra("UserID", userID);
+        startActivity(viewProfile);
     }
 
     private void backToLoginPage(){
         finish();
         startActivity(new Intent(this, LoginActivity.class));
+    }
+
+    private void goToEditPage(){
+        finish();
+        startActivity(new Intent(this, EditProfileActivity.class));
     }
 
     private void search(String s){
@@ -258,11 +274,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         updateUI();
-    }
-
-    private void goToEditPage(){
-        finish();
-        startActivity(new Intent(this, EditProfileActivity.class));
     }
     //
     private void updateUI(){

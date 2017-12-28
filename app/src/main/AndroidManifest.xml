@@ -35,6 +35,7 @@
         <activity android:name=".AdvertismentReadActivity" />
         <activity android:name=".AdvertismentModifyActivity" />
         <activity android:name=".EditProfileActivity" />
+        <activity android:name=".ViewProfileActivity"></activity>
     </application>
 
 </manifest>

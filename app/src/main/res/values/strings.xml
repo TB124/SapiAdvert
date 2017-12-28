@@ -3,4 +3,16 @@
     <string name="facebook_application_id" translatable="false">com.example.thomas.sapiadvert</string>
     <string name="facebook_login_protocol_scheme" translatable="false">com.example.thomas.sapiadvert</string>
     <string name="app_name">SapiAdvert</string>
+    <string name="first_name">First name:</string>
+    <string name="last_name">Last name:</string>
+    <string name="email_address">Email address:</string>
+    <string name="phone_number">Phone number:</string>
+    <string name="back">Back</string>
+    <string name="enter_your_first_name">Enter your first name</string>
+    <string name="enter_your_last_name">Enter your last name</string>
+    <string name="enter_your_email_address">Enter your email address</string>
+    <string name="enter_your_phone_number">Enter your phone number</string>
+    <string name="profile_picture">Profile picture:</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="change_password">Change Password</string>
 </resources>
