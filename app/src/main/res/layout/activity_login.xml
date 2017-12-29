@@ -30,27 +30,27 @@
             android:layout_gravity="center_horizontal"/>
 
         <EditText
-            android:layout_margin="10dp"
-            android:id="@+id/emailInput"
+            android:id="@+id/login_ac_emailInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:hint="@string/enter_your_email_address"
             android:inputType="textEmailAddress" />
 
         <EditText
-            android:layout_margin="10dp"
-            android:id="@+id/passwordInput"
+            android:id="@+id/login_ac_passwordInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:hint="@string/enter_your_password"
             android:inputType="textPassword" />
 
         <Button
-            android:layout_margin="10dp"
-            android:text="@string/login"
-            android:id="@+id/loginButton"
+            android:id="@+id/login_ac_loginButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/login" />
 
         <TextView
             android:textAlignment="center"

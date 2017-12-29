@@ -41,6 +41,11 @@ dependencies {
 
     //Google play services
     compile 'com.google.android.gms:play-services:11.8.0'
+    //Expresso unit test
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestCompile 'com.android.support.test:runner:1.0.1'
+
+
 }
 
 
