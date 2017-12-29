@@ -31,6 +31,7 @@ import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private final String tag = "MainActivity";
+    private final String defaultProfilePicture = "https://firebasestorage.googleapis.com/v0/b/sapiadvert.appspot.com/o/ProfilePictures%2Fprofile.png?alt=media&token=b2e66197-1724-49b4-8b30-077f50ae72c1";
     private FirebaseAuth firebaseAuth;
     // private TextView currentUserTextView;
     // private Button signOutButton;
@@ -205,6 +206,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     UserInDatabase u=dataSnapshot.getValue(UserInDatabase.class);
                     if (u != null) {
                         Glide.with(MainActivity.this).load(u.ProfilePicture).into(profilePicture);
+                    } else {
+                        Glide.with(MainActivity.this).load(defaultProfilePicture).into(profilePicture);
                     }
                 }
 
