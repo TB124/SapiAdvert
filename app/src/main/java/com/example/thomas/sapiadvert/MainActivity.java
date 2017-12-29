@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
 
-                if (i == EditorInfo.IME_NULL && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
+                if (i == EditorInfo.IME_ACTION_SEARCH) {
                     // Toast.makeText(MainActivity.this,"ENTER\n", Toast.LENGTH_LONG).show();
                     String s=".*"+textView.getText().toString()+".*";
                     search(s);

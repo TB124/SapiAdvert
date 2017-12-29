@@ -42,6 +42,12 @@
             android:text="Select Location" />
 
         <Button
+            android:id="@+id/ad_modify_deleteAdvertismentButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete Advertisment" />
+
+        <Button
             android:id="@+id/ad_modify_modifyAdvertismentButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

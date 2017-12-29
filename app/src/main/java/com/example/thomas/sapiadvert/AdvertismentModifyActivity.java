@@ -1,5 +1,7 @@
 package com.example.thomas.sapiadvert;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -27,6 +29,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -48,9 +51,11 @@ public class AdvertismentModifyActivity extends AppCompatActivity{
     private ImageView mainPictureImageView;
     private Button modifyAdvertismentButton;
     private Button selectLocationButton;
+    private Button deleteAdvertismentButton;
 
     private StorageReference firebaseStorage;
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseReference;
 
     private Uri mainImage=null;
     private boolean profileModified=false;
@@ -64,6 +69,7 @@ public class AdvertismentModifyActivity extends AppCompatActivity{
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseStorage= FirebaseStorage.getInstance().getReference();
+        databaseReference= FirebaseDatabase.getInstance().getReference();
 
         advertisment= getIntent().getExtras().getParcelable("Advertisment");
         advertismentKey=getIntent().getStringExtra("AdvertismentKey");
@@ -81,13 +87,42 @@ public class AdvertismentModifyActivity extends AppCompatActivity{
         mainPictureImageView=findViewById(R.id.ad_modify_mainPictureImageView);
         modifyAdvertismentButton=findViewById(R.id.ad_modify_modifyAdvertismentButton);
         selectLocationButton=findViewById(R.id.ad_modify_selectLocationButton);
+        deleteAdvertismentButton=findViewById(R.id.ad_modify_deleteAdvertismentButton);
 
         titleEditText.setText(advertisment.getTitle());
         detailssEditText.setText(advertisment.getDetails());
         Glide.with(AdvertismentModifyActivity.this).load(advertisment.getMainPictureUri()).into(mainPictureImageView);
 
 
+        deleteAdvertismentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog alertDialog = new AlertDialog.Builder(
+                        AdvertismentModifyActivity.this).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Write your code here to execute after dialog closed
+                        firebaseStorage.child(advertismentKey).delete();
+                        databaseReference.child("Advertisments").child(advertismentKey).removeValue();
+                        finish();
 
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    } }).create();
+
+                // Setting Dialog Title
+                alertDialog.setTitle("Alert Dialog");
+
+                // Setting Dialog Message
+                alertDialog.setMessage("Welcome to AndroidHive.info");
+
+                // Setting OK Button
+
+
+                // Showing Alert Message
+                alertDialog.show();
+            }
+        });
 
         selectLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
