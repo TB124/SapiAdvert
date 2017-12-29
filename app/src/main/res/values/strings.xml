@@ -35,4 +35,7 @@
     <string name="enter_an_email_address">Enter an email address</string>
     <string name="email_sent">Email sent</string>
     <string name="password_reset_failed">Password reset failed</string>
+    <string name="my_advertisements">My Advertisements</string>
+    <string name="detail">Detail</string>
+    <string name="title">Title</string>
 </resources>

@@ -1,9 +1,12 @@
 package com.example.thomas.sapiadvert;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -16,7 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewMyAdvertismentsActivity extends AppCompatActivity {
+public class ViewMyAdvertismentsActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
     private DatabaseReference databaseReference;
@@ -26,11 +29,15 @@ public class ViewMyAdvertismentsActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
 
     private RecyclerView myAdvertismentsRecyclerView;
+    private Button backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_my_advertisments);
+
+        backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(this);
 
         myAdvertismentsRecyclerView=findViewById(R.id.view_my_ad_recyclerView);
         myAdvertismentsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -121,5 +128,17 @@ public class ViewMyAdvertismentsActivity extends AppCompatActivity {
     }
     private void updateUI(){
         adapter.notifyDataSetChanged();
+    }
+
+    private void backToEditPage() {
+        finish();
+        startActivity(new Intent(this, EditProfileActivity.class));
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == backButton){
+            backToEditPage();
+        }
     }
 }

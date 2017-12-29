@@ -33,10 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private final String tag = "MainActivity";
     private final String defaultProfilePicture = "https://firebasestorage.googleapis.com/v0/b/sapiadvert.appspot.com/o/ProfilePictures%2Fprofile.png?alt=media&token=b2e66197-1724-49b4-8b30-077f50ae72c1";
     private FirebaseAuth firebaseAuth;
-    // private TextView currentUserTextView;
-    // private Button signOutButton;
     private FirebaseUser currentUser;
-    private Button editProfileButton;
     //Recycle view
     public static List<Advertisment> advertismentList;
     public static List<String> advertismentKeyList;
@@ -50,13 +47,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText searchEditText;
     private List<Advertisment> searchedAdvertismentList;
     private List<String> searchedAdvertismentKeyList;
-    //profile picture
+    // View Components
     private ImageView profilePicture;
-    //
     private TextView addNewAdvertismentButton;
     private Button logOutButton;
-    // TEST
-    private Button viewProfileButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,22 +58,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         // profile picture
         profilePicture= findViewById(R.id.ad_read_profilePictureImageView);
+        profilePicture.setOnClickListener(this);
         // Log out
         logOutButton=findViewById(R.id.logOutButton);
         logOutButton.setOnClickListener(this);
         // Firebase
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
+
         /*if ( currentUser == null ) {
             backToLoginPage();
             return;
         }*/
-        // View Profile TEST
-        viewProfileButton = findViewById(R.id.viewProfileButton);
-        viewProfileButton.setOnClickListener(this);
-        ////////
-        editProfileButton = findViewById(R.id.editProfileButton);
-        editProfileButton.setOnClickListener(this);
         //RECYCLER VIEW
         advertismentRecyclerView=findViewById(R.id.advertismentRecylerView);
         advertismentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -243,17 +233,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
            backToLoginPage();
         }
 
-        if (view == editProfileButton) {
+        if (view == profilePicture) {
             // Switch view
-            startActivity(new Intent(MainActivity.this, ViewMyAdvertismentsActivity.class));
-            //TODO TESSZTRE,IRD MAJD VISSZA
-           // goToEditPage();
+            goToEditPage();
         }
-
-        if (view == viewProfileButton){
-            viewProfilePage("HPThqE2j4WXeAeKcrjVINyvPnvi1");
-        }
-
     }
 
     private void viewProfilePage(String userID){

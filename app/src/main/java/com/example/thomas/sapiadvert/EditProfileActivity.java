@@ -34,6 +34,7 @@ public class EditProfileActivity extends Activity implements View.OnClickListene
     private Button saveButton;
     private Button cancelButton;
     private Button changePasswordButton;
+    private Button viewMyAdvertisementsButton;
     // Change password dialog
     private ChangePassword changePasswordDialog;
     // Edit Texts
@@ -63,6 +64,8 @@ public class EditProfileActivity extends Activity implements View.OnClickListene
         saveButton.setOnClickListener(this);
         changePasswordButton = findViewById(R.id.changePasswordButton);
         changePasswordButton.setOnClickListener(this);
+        viewMyAdvertisementsButton = findViewById(R.id.viewMyAdvertisementsButton);
+        viewMyAdvertisementsButton.setOnClickListener(this);
         // EditTexts
         firstNameInput = findViewById(R.id.firstNameInput);
         lastNameInput = findViewById(R.id.lastNameInput);
@@ -154,6 +157,11 @@ public class EditProfileActivity extends Activity implements View.OnClickListene
         startActivity(new Intent(this, MainActivity.class));
     }
 
+    private void viewMyAdvertisements(){
+        finish();
+        startActivity(new Intent(this, ViewMyAdvertismentsActivity.class));
+    }
+
     @Override
     public void onClick(View view) {
         if (view == cancelButton ){
@@ -167,6 +175,9 @@ public class EditProfileActivity extends Activity implements View.OnClickListene
         if (view == changePasswordButton) {
             changePasswordDialog = new ChangePassword(this);
             changePasswordDialog.show();
+        }
+        if (view == viewMyAdvertisementsButton){
+            viewMyAdvertisements();
         }
     }
 

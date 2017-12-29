@@ -15,10 +15,6 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
-/**
- * Created by Szabi on 2017. 12. 28..
- */
-
 public class MyAdvertismentsAdapter  extends RecyclerView.Adapter<MyAdvertismentsAdapter.ViewHolder>{
 
     private List<AdvertismentMy> advertismentList;
@@ -26,7 +22,7 @@ public class MyAdvertismentsAdapter  extends RecyclerView.Adapter<MyAdvertisment
     private Context context;
     private StorageReference firebaseStorage= FirebaseStorage.getInstance().getReference();
 
-    public MyAdvertismentsAdapter(List<AdvertismentMy> advertismentList, List<String> advertismentKeyList, Context context) {
+    MyAdvertismentsAdapter(List<AdvertismentMy> advertismentList, List<String> advertismentKeyList, Context context) {
         this.advertismentList = advertismentList;
         this.advertismentKeyList = advertismentKeyList;
         this.context = context;
@@ -53,12 +49,12 @@ public class MyAdvertismentsAdapter  extends RecyclerView.Adapter<MyAdvertisment
         return advertismentList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView titleText;
-        public TextView detailText;
-        public ImageView mainImageView;
-        public ViewHolder(View itemView) {
+        TextView titleText;
+        TextView detailText;
+        ImageView mainImageView;
+        ViewHolder(View itemView) {
             super(itemView);
 
             titleText=itemView.findViewById(R.id.my_ad_titleTextView);
@@ -66,7 +62,7 @@ public class MyAdvertismentsAdapter  extends RecyclerView.Adapter<MyAdvertisment
             mainImageView=itemView.findViewById(R.id.my_ad_mainImageImageView);
 
         }
-        public void bind(final AdvertismentMy ad,final String key){
+        void bind(final AdvertismentMy ad, final String key){
 
             View.OnClickListener listener= new View.OnClickListener() {
                 @Override
