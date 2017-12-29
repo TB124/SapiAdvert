@@ -39,7 +39,7 @@ public class AdvertismentModifyActivity extends AppCompatActivity{
     private static final int GALLERY_INTENT =123 ;
     private static final int PLACE_PICKER_REQUEST = 1;
 
-    private Advertisment advertisment;
+    private AdvertismentMy advertisment;
     private AdvertismentInDatabase advertismentInDatabase;
     private String advertismentKey;
 
@@ -61,10 +61,14 @@ public class AdvertismentModifyActivity extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advertisment_modify);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseStorage= FirebaseStorage.getInstance().getReference();
+
         advertisment= getIntent().getExtras().getParcelable("Advertisment");
         advertismentKey=getIntent().getStringExtra("AdvertismentKey");
         advertismentInDatabase=new AdvertismentInDatabase(
-                advertisment.getCreatedBy(),
+                firebaseAuth.getCurrentUser().getUid(),
                 advertisment.getTitle(),
                 advertisment.getDetails(),
                 advertisment.getMainPictureUri(),
@@ -83,8 +87,7 @@ public class AdvertismentModifyActivity extends AppCompatActivity{
         Glide.with(AdvertismentModifyActivity.this).load(advertisment.getMainPictureUri()).into(mainPictureImageView);
 
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseStorage= FirebaseStorage.getInstance().getReference();
+
 
         selectLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +146,7 @@ public class AdvertismentModifyActivity extends AppCompatActivity{
                             FirebaseDatabase.getInstance().getReference().
                                     child("Advertisments")
                                     .child(advertismentKey).setValue(advertismentInDatabase);
-                            returnToMain();
+                            finish();
 
                             //startMainActivity();
                         }
@@ -159,7 +162,7 @@ public class AdvertismentModifyActivity extends AppCompatActivity{
                     FirebaseDatabase.getInstance().getReference().
                             child("Advertisments")
                             .child(advertismentKey).setValue(advertismentInDatabase);
-                    returnToMain();
+                    finish();
                 }
             }
         });

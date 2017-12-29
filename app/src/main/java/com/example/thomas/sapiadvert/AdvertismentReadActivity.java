@@ -55,9 +55,9 @@ public class AdvertismentReadActivity extends AppCompatActivity implements OnMap
         profilePictureImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO jerry profilnezo intetjet meghivni
-                //finish();
-               // startActivity(new Intent(this, MainActivity.class));
+                Intent intent=new Intent(AdvertismentReadActivity.this,ViewProfileActivity.class);
+                intent.putExtra("UserID",advertisment.getCreatedBy());
+                startActivity(intent);
             }
         });
 
