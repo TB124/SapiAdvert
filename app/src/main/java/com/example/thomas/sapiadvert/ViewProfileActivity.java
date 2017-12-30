@@ -31,13 +31,13 @@ public class ViewProfileActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_profile);
         // VIew Components
-        firstNameTextView = (EditText) findViewById(R.id.firstNameTextView);
-        lastNameTextView = (EditText) findViewById(R.id.lastNameTextView);
-        profilePhotoDisplay = (ImageView) findViewById(R.id.profilePhotoDisplay);
-        phoneNumberTextView = (EditText) findViewById(R.id.phoneNumberTextView);
-        emailTextView = (EditText) findViewById(R.id.emailTextView);
+        firstNameTextView = findViewById(R.id.firstNameTextView);
+        lastNameTextView = findViewById(R.id.lastNameTextView);
+        profilePhotoDisplay = findViewById(R.id.profilePhotoDisplay);
+        phoneNumberTextView = findViewById(R.id.phoneNumberTextView);
+        emailTextView = findViewById(R.id.emailTextView);
 
-        backButton = (Button) findViewById(R.id.backButton);
+        backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(this);
         // Get UserId from intent
         Bundle bundle = getIntent().getExtras();

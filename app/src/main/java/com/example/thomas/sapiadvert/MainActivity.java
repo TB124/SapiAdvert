@@ -262,7 +262,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int i=0;
         for (Advertisment temp : advertismentList) {
             if(Pattern.matches(s, temp.getTitle())||Pattern.matches(s, temp.getDetails())){
-                Toast.makeText(MainActivity.this,temp.getTitle(), Toast.LENGTH_LONG).show();
                 searchedAdvertismentList.add(temp);
                 searchedAdvertismentKeyList.add(advertismentKeyList.get(i));
                 Log.i("SEARCH",temp.getTitle());

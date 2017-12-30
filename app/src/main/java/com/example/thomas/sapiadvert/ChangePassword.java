@@ -38,13 +38,13 @@ public class ChangePassword extends Dialog implements View.OnClickListener {
         setTitle("Change Password");
         setContentView(R.layout.change_password);
 
-        passwordErrorTextView = (TextView) findViewById(R.id.passwordErrorTextView);
-        oldPassword = (EditText) findViewById(R.id.oldPasswordInput);
-        newPassword = (EditText) findViewById(R.id.newPasswordInput);
-        confirmNewPassword = (EditText) findViewById(R.id.confirmNewPasswordInput);
-        changePasswordButton = (Button) findViewById(R.id.changePasswordButton);
+        passwordErrorTextView = findViewById(R.id.passwordErrorTextView);
+        oldPassword = findViewById(R.id.oldPasswordInput);
+        newPassword = findViewById(R.id.newPasswordInput);
+        confirmNewPassword = findViewById(R.id.confirmNewPasswordInput);
+        changePasswordButton = findViewById(R.id.changePasswordButton);
         changePasswordButton.setOnClickListener(this);
-        backToEditButton = (Button) findViewById(R.id.backToEditButton);
+        backToEditButton = findViewById(R.id.backToEditButton);
         backToEditButton.setOnClickListener(this);
         passwordErrorTextView.setText(" ");
     }
