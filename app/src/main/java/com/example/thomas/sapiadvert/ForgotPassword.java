@@ -18,7 +18,6 @@ import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-
 public class ForgotPassword extends Dialog implements View.OnClickListener {
     private static final String TAG = "ForgotPassword";
     // View Components

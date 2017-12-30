@@ -3,10 +3,6 @@ package com.example.thomas.sapiadvert;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by Szabi on 2017. 12. 24..
- */
-
 public class Advertisment implements Parcelable {
 
     public Advertisment (){

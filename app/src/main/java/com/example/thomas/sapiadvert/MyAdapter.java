@@ -18,10 +18,6 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
-/**
- * Created by Szabi on 2017. 12. 24..
- */
-
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     private List<Advertisment> advertismentList;

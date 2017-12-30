@@ -18,10 +18,6 @@ import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-/**
- * Created by Thomas on 2017-12-28.
- */
-
 public class ChangePassword extends Dialog implements View.OnClickListener {
     private static final String TAG = "ChangePassword";
     // View Components
