@@ -35,6 +35,11 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 
+/**
+ * Activity for creating and uploading new advertisment created by the curently logged in user
+ * @author Bondor Tamas
+ * @author Kovacs Szabolcs
+ */
 public class AdvertismentUploadActivity extends AppCompatActivity {
 
     private static final int GALLERY_INTENT =123 ;
@@ -58,6 +63,11 @@ public class AdvertismentUploadActivity extends AppCompatActivity {
 ///
 AdvertismentInDatabase ad;
     ///
+
+    /**
+     * Initialising the activity
+     * @param savedInstanceState savedInstance
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -157,11 +167,23 @@ AdvertismentInDatabase ad;
         });
 
     }
+
+    /**
+     * return to the Main activity
+     */
     private void returnToMain(){
         finish();
         startActivity( new Intent(this, MainActivity.class));
 
     }
+
+    /**
+     * processing the result from an image selection event or
+     * processing the result of an location selection event
+     * @param requestCode intent code
+     * @param resultCode result code
+     * @param data result
+     */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
         switch (requestCode){

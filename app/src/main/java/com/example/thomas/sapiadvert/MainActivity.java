@@ -29,6 +29,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+/**
+ * Main activity of the application
+ * Searching and listing from the uploaded advertisments
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private final String tag = "MainActivity";
     private final String defaultProfilePicture = "https://firebasestorage.googleapis.com/v0/b/sapiadvert.appspot.com/o/ProfilePictures%2Fprofile.png?alt=media&token=b2e66197-1724-49b4-8b30-077f50ae72c1";
@@ -52,6 +56,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView addNewAdvertismentButton;
     private Button logOutButton;
 
+    /**
+     * Initialising the advity
+     * Setting up the firebase databse connection
+     * Database Listeners setup
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -224,6 +234,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /**
+     * function to process clicks on the logout button ->logout
+     * and on the profile picture->View Profile
+     * @param view
+     */
     @Override
     public void onClick(View view) {
 
@@ -239,6 +254,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     *opens the profile for read only  of the desired user
+     * @param userID Id of the user
+     */
     private void viewProfilePage(String userID){
         finish();
         Intent viewProfile = new Intent(this, ViewProfileActivity.class);
@@ -246,16 +265,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(viewProfile);
     }
 
+    /**
+     * back to the login page
+     */
     private void backToLoginPage(){
         finish();
         startActivity(new Intent(this, LoginActivity.class));
     }
 
+    /**
+     *opens the profile for edit for the desired user
+     */
     private void goToEditPage(){
         finish();
         startActivity(new Intent(this, EditProfileActivity.class));
     }
 
+    /**
+     * searching between the advertisments
+     * @param s search target
+     */
     private void search(String s){
         searchedAdvertismentList.clear();
         searchedAdvertismentKeyList.clear();
@@ -272,6 +301,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         updateUI();
     }
     //
+
+    /**
+     *updating the UI
+     */
     private void updateUI(){
         adapter.notifyDataSetChanged();
     }
