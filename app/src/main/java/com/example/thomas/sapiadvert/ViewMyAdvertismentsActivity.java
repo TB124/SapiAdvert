@@ -19,6 +19,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Activity to view the advertisments created by the curently logged in user
+ */
 public class ViewMyAdvertismentsActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
@@ -31,6 +34,12 @@ public class ViewMyAdvertismentsActivity extends AppCompatActivity implements Vi
     private RecyclerView myAdvertismentsRecyclerView;
     private Button backButton;
 
+    /**
+     * initialising the activity
+     * -firebase databse connection setup
+     * -firebase child listeners-> downloading the advertisment created by th curent user
+     * @param savedInstanceState savedInstance
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,15 +135,25 @@ public class ViewMyAdvertismentsActivity extends AppCompatActivity implements Vi
 
 
     }
+    /**
+    upating the UI
+     */
     private void updateUI(){
         adapter.notifyDataSetChanged();
     }
 
+    /**
+    back to edit page
+     */
     private void backToEditPage() {
         finish();
         startActivity(new Intent(this, EditProfileActivity.class));
     }
 
+    /**
+     *  processing clikc on the backbutton
+     * @param view the viewo where the click event happened
+     */
     @Override
     public void onClick(View view) {
         if (view == backButton){

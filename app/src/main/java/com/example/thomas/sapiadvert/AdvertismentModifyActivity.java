@@ -37,31 +37,36 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 
+/**
+ * Activity for modoifying an existing advertisment
+ * @author Bondor Tamas
+ * @author Kovacs Szabolcs
+ */
 public class AdvertismentModifyActivity extends AppCompatActivity{
 
     private static final int GALLERY_INTENT =123 ;
     private static final int PLACE_PICKER_REQUEST = 1;
-
     private AdvertismentMy advertisment;
     private AdvertismentInDatabase advertismentInDatabase;
     private String advertismentKey;
-
     private EditText titleEditText;
     private EditText detailssEditText;
     private ImageView mainPictureImageView;
     private Button modifyAdvertismentButton;
     private Button selectLocationButton;
     private Button deleteAdvertismentButton;
-
     private StorageReference firebaseStorage;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
-
     private Uri mainImage=null;
     private boolean profileModified=false;
 
 
-
+    /**
+     * Initializing the advitiy
+     * Reading the informations about the advertisment from the intent
+     * @param savedInstanceState Saved instances
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -204,11 +209,23 @@ public class AdvertismentModifyActivity extends AppCompatActivity{
 
 
     }
+
+    /**
+     * function to return to the main activity
+     */
     private void returnToMain(){
         finish();
         startActivity( new Intent(this, MainActivity.class));
 
     }
+
+    /**
+     * helper function to get result from an image selection
+     * or to get the result from a google maps select location event
+     * @param requestCode intent code
+     * @param resultCode result code
+     * @param data result
+     */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode){
             case GALLERY_INTENT:{

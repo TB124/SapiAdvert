@@ -18,6 +18,11 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
+/*
+Adapter for the recycler view in Main activity that hold the advertisments
+@author Bondor Tamas
+@author Kovacs Szabolcs
+ */
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     private List<Advertisment> advertismentList;
@@ -65,6 +70,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             mainImageView=itemView.findViewById(R.id.mainImageView);
 
         }
+
+        /**
+         * Ataching onclick listener on profile picture and on the rest of the view
+         * @param ad advertisment
+         */
         public void bind(final Advertisment ad){
             profilePictureView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -23,6 +23,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+/**
+ * Activity for reading an advertisment
+ * @author Bondor Tamas
+ * @author Kovacs Szabolcs
+ */
 public class AdvertismentReadActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private Advertisment advertisment;
@@ -33,6 +38,13 @@ public class AdvertismentReadActivity extends AppCompatActivity implements OnMap
     private Button callButton;
 
     private DatabaseReference databaseReference;
+
+    /**
+     * Initialising the activity
+     * Reading the information about the advertisment from the intent
+     * Setting up listeners for the apropiate buttons,views
+     * @param savedInstanceState Saved instance
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +100,11 @@ public class AdvertismentReadActivity extends AppCompatActivity implements OnMap
                 .findFragmentById(R.id.ad_read_map);
         mapFragment.getMapAsync(this);
     }
+
+    /**
+     * setting up the google maps fragment,creating a market to the location of the advertisment
+     * @param googleMap googleMaps reference
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
        // Toast.makeText(AdvertismentReadActivity.this,advertisment.getLongitude()+":"+advertisment.getLatitude(),Toast.LENGTH_LONG).show();
