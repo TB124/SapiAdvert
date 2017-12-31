@@ -29,67 +29,62 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
-
+/**
+ * The Registration Activity, you can use this Activity to register to the Application.
+ * It takes the data needed, and registers the User.
+ */
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
-
     private static final int GALLERY_INTENT =3 ;
     private Button registerButton;
     private EditText emailInput;
     private EditText passwordInput;
     private TextView signInTextView;
-
     private ProgressDialog progressDialog;
-
     private FirebaseAuth firebaseAuth;
-
     ///
     private ImageView profilePictureInput;
     private EditText firstNameInput;
     private EditText lastNameInput;
     private EditText phoneNumberInput;
     private EditText confirmPasswordInput;
-
     private String emailAddress;
     private String password;
     private String passwordConfirm;
     private String firstName;
     private String lastName;
     private String phoneNumber;
-    ///
     //Storage
     private StorageReference firebaseStorage;
     private Uri uri;
     private   HashMap<String,String> datas;
-    ///
+    /**
+     * Setting up the view, linking the view components, setting up Firebase,
+     * and loading the Data of the logged in user.
+     * @param savedInstanceState Saved instances.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() != null ){
             // Start User activities --> MainActivity
             startMainActivity();
         }
-
         registerButton = (Button) findViewById(R.id.registerButton);
         emailInput = (EditText) findViewById(R.id.emailInput);
         passwordInput = (EditText) findViewById(R.id.passwordInput);
         signInTextView = (TextView) findViewById(R.id.signInTextView);
-
         progressDialog = new ProgressDialog(this);
-
         registerButton.setOnClickListener(this);
         signInTextView.setOnClickListener(this);
-
         ///
         profilePictureInput=(ImageView) findViewById(R.id.profilePictureInput);
         firstNameInput=(EditText) findViewById(R.id.firstNameInput);
         lastNameInput=(EditText) findViewById(R.id.lastNameInput);
         phoneNumberInput=(EditText) findViewById(R.id.phoneNumberInput);
         confirmPasswordInput=(EditText) findViewById(R.id.confirmPasswordInput);
-
         profilePictureInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,22 +95,30 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         });
         ///Storage
         firebaseStorage= FirebaseStorage.getInstance().getReference();
-
     }
-
+    /**
+     * OnClick listeners for the two buttons.
+     * @param view the vew which was clicked.
+     */
     @Override
     public void onClick(View view) {
         if ( view == signInTextView ){
             //Login
             backToLoginPage();
         }
-
         if ( view == registerButton ){
             //Register
             registerUser();
         }
     }
 
+    /**
+     * Get the strings from the email input fields, if they are empty
+     * prompt an error message in a toast. Then send the data to Firebase
+     * and show the result of the registration in a Toast. If it was successful
+     * redirect to the application. Show a progress dialog while the registration
+     * is happening.
+     */
     private void registerUser() {
         emailAddress = emailInput.getText().toString().trim();
         password = passwordInput.getText().toString().trim();
@@ -123,7 +126,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         firstName=firstNameInput.getText().toString().trim();
         lastName=lastNameInput.getText().toString().trim();
         phoneNumber=phoneNumberInput.getText().toString().trim();
-
         if(uri ==null){
             Toast.makeText(this, "Please select a profile picture !",Toast.LENGTH_SHORT).show();
             return;
@@ -154,12 +156,10 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             Toast.makeText(this, "Password confirmation failed !",Toast.LENGTH_SHORT).show();
             return;
         }
-
         // Display progress dialog to the User
         progressDialog.setMessage("Registering...");
         progressDialog.setCancelable(false);
         progressDialog.show();
-
         firebaseAuth.createUserWithEmailAndPassword(emailAddress, password).addOnCompleteListener(this,
                 new OnCompleteListener<AuthResult>() {
                     @Override
@@ -170,7 +170,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                             Toast.makeText(RegistrationActivity.this, "You have successfully registered!",
                                     Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
-
                             //Database
                             FirebaseUser currentUser=firebaseAuth.getCurrentUser();
                             datas=new HashMap<>();
@@ -181,7 +180,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                             final DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().
                                     child("Users")
                                     .child(currentUser.getUid());
-
                             StorageReference filepath=firebaseStorage.child("ProfilePictures").child(currentUser.getUid());
                             filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                 @Override
@@ -192,13 +190,9 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                                     startMainActivity();
                                 }
                             });
-
-                            ///
-
                         }
                         else{
                             // Registration was not successful
-
                             Toast.makeText(RegistrationActivity.this, "Registration failed! Error:"+ task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
@@ -206,17 +200,26 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                     }
                 });
     }
-
+    /**
+     * Close the Registration activity and go back to the Login page.
+     */
     private void backToLoginPage(){
         finish();
         startActivity(new Intent(this, LoginActivity.class));
     }
-
+    /**
+     * Close the Registration activity and go back to the Main Activity.
+     */
     private void startMainActivity(){
         finish();
         startActivity(new Intent(this, MainActivity.class));
     }
-    //Image select
+    /**
+     * The result of the Gallery intent, to get a picture input form the user.
+     * @param requestCode request type (Gallery intent in this case)
+     * @param resultCode result (the result of the intent)
+     * @param data returned value.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
@@ -224,11 +227,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
                 uri=data.getData();
-               // StorageReference filepath=firebaseStorage.child("ProfilePictures").
-                //Glide.with(this).load(uri).into(profilePictureInput);
                 Glide.with(RegistrationActivity.this).load(uri).into(profilePictureInput);
-                //profilePictureInput.setImageURI(uri);
-
             }
         }
     }

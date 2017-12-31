@@ -32,17 +32,20 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+/**
+ * The Login Activity of the Application, it gives us three possibilities
+ * Email login,Google login and guest login. It also gives us the option to reset
+ * an account.
+ */
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-
+    private final String tag="LoginActivity";
     private static final int RC_SIGN_IN =123 ;
     private static final String TAG ="login" ;
     private Button loginButton;
     private EditText emailInput;
     private EditText passwordInput;
     private TextView registerTextView;
-
     private ProgressDialog progressDialog;
-
     private FirebaseAuth firebaseAuth;
     private TextView forgetPasswordTextView;
     //google login
@@ -50,26 +53,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     GoogleApiClient googleApiClient;
     //
     private TextView loginAsGuestTextView;
+    /**
+     * Setting up the view, linking the view components, setting up Firebase,
+     * and loading the Data of the logged in user.
+     * @param savedInstanceState Saved instances.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        //
         firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() != null ){
             // Start User activities --> MainActivity
             startMainActivity();
         }
-
         loginButton = findViewById(R.id.login_ac_loginButton);
         emailInput = findViewById(R.id.login_ac_emailInput);
         passwordInput = findViewById(R.id.login_ac_passwordInput);
         registerTextView = findViewById(R.id.registerTextView);
         forgetPasswordTextView= findViewById(R.id.forgetPasswordTextView);
         progressDialog = new ProgressDialog(this);
-
+        //
         loginButton.setOnClickListener(this);
         registerTextView.setOnClickListener(this);
         forgetPasswordTextView.setOnClickListener(this);
@@ -94,7 +99,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 signIn();
             }
         });
-
         //
         loginAsGuestTextView=findViewById(R.id.loginAsGuest);
         loginAsGuestTextView.setOnClickListener(new View.OnClickListener() {
@@ -104,31 +108,36 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
     }
-
+    /**
+     * OnClick listeners for the two buttons.
+     * @param view the vew which was clicked.
+     */
     @Override
     public void onClick(View view) {
-
         if ( view == loginButton ){
             //Login
             loginUser();
         }
-
         if ( view == registerTextView ){
             //Register
            // finish();
             startActivity( new Intent(this, RegistrationActivity.class));
         }
-
         if ( view == forgetPasswordTextView ){
             ForgotPassword dialog = new ForgotPassword(this);
             dialog.show();
         }
     }
 
+    /**
+     * Get the strings from the email input fields, if they are empty
+     * prompt an error message in a toast. Then check the credentials,
+     * if it is valid login the user. While the authentication is
+     * happening, a progress dialog is shown.
+     */
     private void loginUser() {
         String emailAddress = emailInput.getText().toString().trim();
         String password = passwordInput.getText().toString().trim();
-
         if (TextUtils.isEmpty(emailAddress)){
             // email field is empty -- display message and return
             Toast.makeText(this, "Please enter an email address!",Toast.LENGTH_SHORT).show();
@@ -139,12 +148,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Toast.makeText(this, "Please enter a password!",Toast.LENGTH_SHORT).show();
             return;
         }
-
         // Display progress dialog to the User
         progressDialog.setMessage("Logging in...");
         progressDialog.setCancelable(false);
         progressDialog.show();
-
         firebaseAuth.signInWithEmailAndPassword(emailAddress, password).addOnCompleteListener(this,
                 new OnCompleteListener<AuthResult>() {
                     @Override
@@ -168,17 +175,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 });
     }
 
+    /**
+     * Close the Login activity and start the main Activity.
+     */
     private void startMainActivity(){
         finish();
         startActivity(new Intent(this, MainActivity.class));
     }
-    //google sign in
-    private void signIn() {
 
+    /**
+     * Google sign in, calling Googles' intent
+     */
+    private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+    /**
+     * Get the result of the Google login.
+     * @param requestCode the request.
+     * @param resultCode the result of the request.
+     * @param data returned result.
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -197,30 +215,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         }
     }
+
+    /**
+     * Logging in with Google account.
+     * @param acct Google account variable.
+     */
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
-
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-
-                            //FirebaseUser user = firebaseAuth.getCurrentUser();
                             startMainActivity();
-                          //  updateUI(user);
                         } else {
-                            // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                           // Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
-                           // updateUI(null);
                             Toast.makeText(LoginActivity.this,"Google login failed !",Toast.LENGTH_LONG).show();
                         }
-
-                        // ...
                     }
                 });
     }

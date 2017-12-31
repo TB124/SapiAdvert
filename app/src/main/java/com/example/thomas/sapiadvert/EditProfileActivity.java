@@ -59,7 +59,7 @@ public class EditProfileActivity extends Activity implements View.OnClickListene
     private Uri profileURI;
     /**
      * Setting up the view, linking the view components, setting up Firebase,
-     * and loading the Data of the logged id user.
+     * and loading the Data of the logged in user.
      * @param savedInstanceState Saved instances.
      */
     @Override
@@ -163,7 +163,6 @@ public class EditProfileActivity extends Activity implements View.OnClickListene
             Toast.makeText(this, "Failed to update Profile!",Toast.LENGTH_SHORT).show();
         }
     }
-
     /**
      * Closing the current activity, and starting the main activity.
      */
@@ -178,7 +177,6 @@ public class EditProfileActivity extends Activity implements View.OnClickListene
         finish();
         startActivity(new Intent(this, ViewMyAdvertismentsActivity.class));
     }
-
     /**
      * OnClick listeners for the elements.
      * @param view the vew which was clicked.

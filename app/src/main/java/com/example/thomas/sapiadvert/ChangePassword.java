@@ -114,7 +114,6 @@ public class ChangePassword extends Dialog implements View.OnClickListener {
                 });
         // back to edit page
     }
-
     /**
      * OnClick listeners for the two buttons.
      * @param view the vew which was clicked.

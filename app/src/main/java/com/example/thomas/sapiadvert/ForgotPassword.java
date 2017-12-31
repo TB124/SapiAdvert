@@ -18,6 +18,12 @@ import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * This is a dialog view, that pops op, whe the user click the forgot password button.
+ * The view has one input field and two buttons. The user will type his email address
+ * into the input field, and then clicks the Reset button in order to reset the password.
+ * The dialog will be displayed if the show() method of the class is called.
+ */
 public class ForgotPassword extends Dialog implements View.OnClickListener {
     private static final String TAG = "ForgotPassword";
     // View Components
@@ -26,10 +32,18 @@ public class ForgotPassword extends Dialog implements View.OnClickListener {
     private EditText emailInput;
     private TextView errorTextView;
 
+    /**
+     * Class Constructor
+     * @param context
+     */
     ForgotPassword(Context context) {
         super (context);
     }
 
+    /**
+     * Setting up the view and linking the view components.
+     * @param savedInstanceState Saved instances.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +59,12 @@ public class ForgotPassword extends Dialog implements View.OnClickListener {
         backToLoginButton.setOnClickListener(this);
     }
 
+    /**
+     * Get the string from the input field. If the field is empty give an error message.
+     * Try sending the password reset email.If the email address is not valid, or not between
+     * the registered users, it will prompt an error message. If the email was sent successfully
+     * the dialog will prompt a success message.
+     */
     private void resetPassword(){
         String email = emailInput.getText().toString().trim();
         if (TextUtils.isEmpty(email)){
@@ -67,6 +87,10 @@ public class ForgotPassword extends Dialog implements View.OnClickListener {
                 });
     }
 
+    /**
+     * OnClick listeners for the two buttons.
+     * @param view the vew which was clicked.
+     */
     @Override
     public void onClick(View view) {
         if ( view == resetPasswordButton) {
