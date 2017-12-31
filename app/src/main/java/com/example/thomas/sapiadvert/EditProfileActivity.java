@@ -26,6 +26,11 @@ import com.google.firebase.storage.UploadTask;
 
 import java.net.URI;
 
+/**
+ * This Activity will show the logged in users' profile, and give him the possibility
+ * to edit the data. In this activity the user can list his own advertisements, change
+ * his password, and go back to the main activity.
+ */
 public class EditProfileActivity extends Activity implements View.OnClickListener {
     private final String tag = "EditProfile Activity:";
     private final String defaultProfilePicture = "https://firebasestorage.googleapis.com/v0/b/sapiadvert.appspot.com/o/ProfilePictures%2Fprofile.png?alt=media&token=b2e66197-1724-49b4-8b30-077f50ae72c1";
@@ -52,7 +57,11 @@ public class EditProfileActivity extends Activity implements View.OnClickListene
     // Storage
     private StorageReference firebaseStorage;
     private Uri profileURI;
-
+    /**
+     * Setting up the view, linking the view components, setting up Firebase,
+     * and loading the Data of the logged id user.
+     * @param savedInstanceState Saved instances.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,6 +127,9 @@ public class EditProfileActivity extends Activity implements View.OnClickListene
                 });
     }
 
+    /**
+     * Setting the new Data for the user, according to the input fields.
+     */
     private void updateProfile(){
         try {
             final UserInDatabase data = new UserInDatabase(
@@ -152,16 +164,25 @@ public class EditProfileActivity extends Activity implements View.OnClickListene
         }
     }
 
+    /**
+     * Closing the current activity, and starting the main activity.
+     */
     private void startMainActivity(){
         finish();
         startActivity(new Intent(this, MainActivity.class));
     }
-
+    /**
+     * Closing the current activity, and list the users advertisements.
+     */
     private void viewMyAdvertisements(){
         finish();
         startActivity(new Intent(this, ViewMyAdvertismentsActivity.class));
     }
 
+    /**
+     * OnClick listeners for the elements.
+     * @param view the vew which was clicked.
+     */
     @Override
     public void onClick(View view) {
         if (view == cancelButton ){
@@ -181,6 +202,12 @@ public class EditProfileActivity extends Activity implements View.OnClickListene
         }
     }
 
+    /**
+     * The result of the Gallery intent, to get a picture input form the user.
+     * @param requestCode request type (Gallery intent in this case)
+     * @param resultCode result (the result of the intent)
+     * @param data returned value.
+     */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
         if (requestCode == GALLERY_INTENT) {

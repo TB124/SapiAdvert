@@ -18,6 +18,12 @@ import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * This is a dialog view, that will pop up, when we want to change our password.
+ * The view has three input fields (old password, new password and confirm password)
+ * and two buttons (cancel and change).
+ * The dialog will be displayed if the show() method of the class is called.
+ */
 public class ChangePassword extends Dialog implements View.OnClickListener {
     private static final String TAG = "ChangePassword";
     // View Components
@@ -28,10 +34,18 @@ public class ChangePassword extends Dialog implements View.OnClickListener {
     private Button backToEditButton;
     private TextView passwordErrorTextView;
 
+    /**
+     * Class constructor
+     * @param context The context where he dialog is created.
+     */
     public ChangePassword(Context context) {
         super (context);
     }
 
+    /**
+     * Setting up the view and linking the view components.
+     * @param savedInstanceState Saved instances.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +63,13 @@ public class ChangePassword extends Dialog implements View.OnClickListener {
         passwordErrorTextView.setText(" ");
     }
 
+    /**
+     * Get the strings from the input fields, check if they are correct
+     * and display a message if any errors occurred.
+     * Create a Credential with the old password and the users email address,
+     * check if it is valid, if any error occurs the password was incorrect
+     * so display a message, otherwise change the password.
+     */
     private void changePassword(){
         String oldPW = oldPassword.getText().toString().trim();
         final String newPW = newPassword.getText().toString().trim();
@@ -94,6 +115,10 @@ public class ChangePassword extends Dialog implements View.OnClickListener {
         // back to edit page
     }
 
+    /**
+     * OnClick listeners for the two buttons.
+     * @param view the vew which was clicked.
+     */
     @Override
     public void onClick(View view) {
         if ( view == changePasswordButton) {
