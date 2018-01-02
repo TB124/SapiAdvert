@@ -10,9 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -25,34 +22,34 @@ Adapter for the recycler view in Main activity that hold the advertisments
  */
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
-    private List<Advertisment> advertismentList;
+    private List<Advertisement> advertisementList;
     private Context context;
     private StorageReference firebaseStorage= FirebaseStorage.getInstance().getReference();
-    public MyAdapter(List<Advertisment> advertismentList, Context context) {
-        this.advertismentList = advertismentList;
+    public MyAdapter(List<Advertisement> advertisementList, Context context) {
+        this.advertisementList = advertisementList;
         this.context = context;
     }
 
     @Override
     public  ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.addvertisment_item,parent,false);
+        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.advertisement_item,parent,false);
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Advertisment advertisment = advertismentList.get(position);
-        holder.titleText.setText(advertisment.getTitle());
-        holder.detailText.setText(advertisment.getDetails());
-        Glide.with(context).load(advertisment.getProfilePictureUri()).into(holder.profilePictureView);
-        Glide.with(context).load(advertisment.getMainPictureUri()).into(holder.mainImageView);
-        holder.bind(advertisment);
+        Advertisement advertisement = advertisementList.get(position);
+        holder.titleText.setText(advertisement.getTitle());
+        holder.detailText.setText(advertisement.getDetails());
+        Glide.with(context).load(advertisement.getProfilePictureUri()).into(holder.profilePictureView);
+        Glide.with(context).load(advertisement.getMainPictureUri()).into(holder.mainImageView);
+        holder.bind(advertisement);
 
     }
 
     @Override
     public int getItemCount() {
-        return advertismentList.size();
+        return advertisementList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -75,7 +72,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
          * Ataching onclick listener on profile picture and on the rest of the view
          * @param ad advertisment
          */
-        public void bind(final Advertisment ad){
+        public void bind(final Advertisement ad){
             profilePictureView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -87,8 +84,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             View.OnClickListener listener= new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent myIntent = new Intent(context,AdvertismentReadActivity.class);
-                    myIntent.putExtra("Advertisment",ad);
+                    Intent myIntent = new Intent(context,AdvertisementReadActivity.class);
+                    myIntent.putExtra("Advertisement",ad);
                     context.startActivity(myIntent);
                 }
             };

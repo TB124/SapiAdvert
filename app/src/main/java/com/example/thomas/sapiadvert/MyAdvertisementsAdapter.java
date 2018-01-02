@@ -18,28 +18,28 @@ import java.util.List;
 /**
  * Adapter for the recycler view that holds the advertisment created by the curently logged in user
  */
-public class MyAdvertismentsAdapter  extends RecyclerView.Adapter<MyAdvertismentsAdapter.ViewHolder>{
+public class MyAdvertisementsAdapter extends RecyclerView.Adapter<MyAdvertisementsAdapter.ViewHolder>{
 
-    private List<AdvertismentMy> advertismentList;
+    private List<AdvertisementMy> advertismentList;
     private List<String> advertismentKeyList;
     private Context context;
     private StorageReference firebaseStorage= FirebaseStorage.getInstance().getReference();
 
-    MyAdvertismentsAdapter(List<AdvertismentMy> advertismentList, List<String> advertismentKeyList, Context context) {
+    MyAdvertisementsAdapter(List<AdvertisementMy> advertismentList, List<String> advertismentKeyList, Context context) {
         this.advertismentList = advertismentList;
         this.advertismentKeyList = advertismentKeyList;
         this.context = context;
     }
 
     @Override
-    public MyAdvertismentsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.myadvertisment_item,parent,false);
-        return new MyAdvertismentsAdapter.ViewHolder(v);
+    public MyAdvertisementsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.myadvertisement_item,parent,false);
+        return new MyAdvertisementsAdapter.ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(MyAdvertismentsAdapter.ViewHolder holder, int position) {
-        AdvertismentMy advertisment = advertismentList.get(position);
+    public void onBindViewHolder(MyAdvertisementsAdapter.ViewHolder holder, int position) {
+        AdvertisementMy advertisment = advertismentList.get(position);
         holder.titleText.setText(advertisment.getTitle());
         holder.detailText.setText(advertisment.getDetails());
         Glide.with(context).load(advertisment.getMainPictureUri()).into(holder.mainImageView);
@@ -71,13 +71,13 @@ public class MyAdvertismentsAdapter  extends RecyclerView.Adapter<MyAdvertisment
          * @param ad
          * @param key
          */
-        void bind(final AdvertismentMy ad, final String key){
+        void bind(final AdvertisementMy ad, final String key){
 
             View.OnClickListener listener= new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent myIntent = new Intent(context,AdvertismentModifyActivity.class);
-                    myIntent.putExtra("Advertisment",ad);
+                    Intent myIntent = new Intent(context,AdvertisementModifyActivity.class);
+                    myIntent.putExtra("Advertisement",ad);
                     myIntent.putExtra("AdvertismentKey",key);
                     context.startActivity(myIntent);
                 }

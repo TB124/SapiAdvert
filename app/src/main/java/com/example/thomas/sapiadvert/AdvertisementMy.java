@@ -6,7 +6,7 @@ import android.os.Parcelable;
 /**
  * Class to represent an advertisment created by the user
  */
-public class AdvertismentMy implements Parcelable {
+public class AdvertisementMy implements Parcelable {
     private String title;
     private String details;
     private String mainPictureUri;
@@ -17,7 +17,7 @@ public class AdvertismentMy implements Parcelable {
      * funtion to create an advertisment from a parcel (creating advertisment from intent)
      * @param in parcel
      */
-    protected AdvertismentMy(Parcel in) {
+    protected AdvertisementMy(Parcel in) {
         title = in.readString();
         details = in.readString();
         mainPictureUri = in.readString();
@@ -25,15 +25,15 @@ public class AdvertismentMy implements Parcelable {
         latitude = in.readDouble();
     }
 
-    public static final Creator<AdvertismentMy> CREATOR = new Creator<AdvertismentMy>() {
+    public static final Creator<AdvertisementMy> CREATOR = new Creator<AdvertisementMy>() {
         @Override
-        public AdvertismentMy createFromParcel(Parcel in) {
-            return new AdvertismentMy(in);
+        public AdvertisementMy createFromParcel(Parcel in) {
+            return new AdvertisementMy(in);
         }
 
         @Override
-        public AdvertismentMy[] newArray(int size) {
-            return new AdvertismentMy[size];
+        public AdvertisementMy[] newArray(int size) {
+            return new AdvertisementMy[size];
         }
     };
 
@@ -85,7 +85,7 @@ public class AdvertismentMy implements Parcelable {
      * @param longitude longitude information about the advertisment
      * @param latitude latitude information about the advertisment
      */
-    public AdvertismentMy(String title, String details, String mainPictureUri, double longitude, double latitude) {
+    public AdvertisementMy(String title, String details, String mainPictureUri, double longitude, double latitude) {
         this.title = title;
         this.details = details;
         this.mainPictureUri = mainPictureUri;
@@ -135,7 +135,7 @@ public class AdvertismentMy implements Parcelable {
      */
     @Override
     public String toString() {
-        return "AdvertismentMy{" +
+        return "AdvertisementMy{" +
                 "title='" + title + '\'' +
                 ", details='" + details + '\'' +
                 ", mainPictureUri='" + mainPictureUri + '\'' +

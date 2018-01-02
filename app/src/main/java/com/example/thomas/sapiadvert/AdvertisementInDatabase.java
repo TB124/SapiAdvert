@@ -6,7 +6,7 @@ package com.example.thomas.sapiadvert;
  * @author Kovacs Szabolcs
  */
 
-public class  AdvertismentInDatabase {
+public class AdvertisementInDatabase {
     /**
      * ID of the advertiser
      */
@@ -40,7 +40,7 @@ public class  AdvertismentInDatabase {
     /**
      * default consturctor
      */
-    public AdvertismentInDatabase(){
+    public AdvertisementInDatabase(){
 
     }
 
@@ -50,7 +50,7 @@ public class  AdvertismentInDatabase {
      */
     @Override
     public String toString() {
-        return "AdvertismentInDatabase{" +
+        return "AdvertisementInDatabase{" +
                 "CreatedBy='" + CreatedBy + '\'' +
                 ", Title='" + Title + '\'' +
                 ", Details='" + Details + '\'' +
@@ -69,12 +69,12 @@ public class  AdvertismentInDatabase {
      * @param Longitude longitude information about the advertisment
      * @param Latitude latitude information about the advertisment
      */
-    AdvertismentInDatabase(String CreatedBy,
-                           String Title,
-                           String Details,
-                           String MainPicture,
-                           double Longitude,
-                           double Latitude){
+    AdvertisementInDatabase(String CreatedBy,
+                            String Title,
+                            String Details,
+                            String MainPicture,
+                            double Longitude,
+                            double Latitude){
         this.CreatedBy=CreatedBy;
         this.Title=Title;
         this.Details=Details;

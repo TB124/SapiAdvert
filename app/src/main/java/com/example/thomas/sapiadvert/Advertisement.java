@@ -5,12 +5,12 @@ import android.os.Parcelable;
 
 
 /**
-* The Advertisment class is used for represent an advertisment in the MainActivity
+* The Advertisement class is used for represent an advertisment in the MainActivity
  * @author      Bondor Tamas
  * @author      Kovacs Szabolcs
  */
 
-public class Advertisment implements Parcelable {
+public class Advertisement implements Parcelable {
 
 
     /**
@@ -51,7 +51,7 @@ public class Advertisment implements Parcelable {
     /**
      * detault constructor
      */
-    public Advertisment (){
+    public Advertisement(){
 
     }
 
@@ -60,7 +60,7 @@ public class Advertisment implements Parcelable {
      * Constructor, creating a class from a parcel(retreiving advertisment from intent)
      * @param in parcel
      */
-    protected Advertisment(Parcel in) {
+    protected Advertisement(Parcel in) {
         title = in.readString();
         details = in.readString();
         createdBy = in.readString();
@@ -70,15 +70,15 @@ public class Advertisment implements Parcelable {
         latitude=Double.parseDouble(in.readString());
     }
 
-    public static final Creator<Advertisment> CREATOR = new Creator<Advertisment>() {
+    public static final Creator<Advertisement> CREATOR = new Creator<Advertisement>() {
         @Override
-        public Advertisment createFromParcel(Parcel in) {
-            return new Advertisment(in);
+        public Advertisement createFromParcel(Parcel in) {
+            return new Advertisement(in);
         }
 
         @Override
-        public Advertisment[] newArray(int size) {
-            return new Advertisment[size];
+        public Advertisement[] newArray(int size) {
+            return new Advertisement[size];
         }
     };
 
@@ -133,13 +133,13 @@ public class Advertisment implements Parcelable {
      * @param longitude longitude information
      * @param latitude latiude information
      */
-    public Advertisment(String title,
-                        String details,
-                        String createdBy,
-                        String profilePictureUri,
-                        String mainPictureUri,
-                        double longitude,
-                        double latitude) {
+    public Advertisement(String title,
+                         String details,
+                         String createdBy,
+                         String profilePictureUri,
+                         String mainPictureUri,
+                         double longitude,
+                         double latitude) {
         this.title = title;
         this.details = details;
         this.createdBy = createdBy;

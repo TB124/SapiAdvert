@@ -22,12 +22,12 @@ import java.util.List;
 /**
  * Activity to view the advertisments created by the curently logged in user
  */
-public class ViewMyAdvertismentsActivity extends AppCompatActivity implements View.OnClickListener {
+public class ViewMyAdvertisementsActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
     private DatabaseReference databaseReference;
 
-    private List<AdvertismentMy> advertismentList;
+    private List<AdvertisementMy> advertismentList;
     private List<String> advertismentKeyList;
     private RecyclerView.Adapter adapter;
 
@@ -43,7 +43,7 @@ public class ViewMyAdvertismentsActivity extends AppCompatActivity implements Vi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_my_advertisments);
+        setContentView(R.layout.activity_view_my_advertisements);
 
         backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(this);
@@ -58,18 +58,18 @@ public class ViewMyAdvertismentsActivity extends AppCompatActivity implements Vi
         advertismentList=new ArrayList<>();
         advertismentKeyList=new ArrayList<>();
 
-        adapter=new MyAdvertismentsAdapter(advertismentList, advertismentKeyList, this);
+        adapter=new MyAdvertisementsAdapter(advertismentList, advertismentKeyList, this);
 
 
         myAdvertismentsRecyclerView.setAdapter(adapter);
 /*
         String k=currentUser.getUid();
         int i=0;
-        for(Advertisment ad:MainActivity.advertismentList){
+        for(Advertisement ad:MainActivity.advertisementList){
             if(ad.getCreatedBy().equals(k)){
 
                 advertismentKeyList.add(MainActivity.advertismentKeyList.get(i));
-                advertismentList.add(new AdvertismentMy(
+                advertisementList.add(new AdvertisementMy(
                         ad.getTitle(),
                         ad.getDetails(),
                         ad.getMainPictureUri(),
@@ -86,10 +86,10 @@ public class ViewMyAdvertismentsActivity extends AppCompatActivity implements Vi
         databaseReference.child("Advertisments").orderByChild("CreatedBy").equalTo(currentUser.getUid()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                AdvertismentInDatabase adInDatabase =dataSnapshot.getValue(AdvertismentInDatabase.class);
+                AdvertisementInDatabase adInDatabase =dataSnapshot.getValue(AdvertisementInDatabase.class);
 
-               // Toast.makeText(ViewMyAdvertismentsActivity.this,adInDatabase.toString(), Toast.LENGTH_LONG).show();
-                advertismentList.add(new AdvertismentMy(
+               // Toast.makeText(ViewMyAdvertisementsActivity.this,adInDatabase.toString(), Toast.LENGTH_LONG).show();
+                advertismentList.add(new AdvertisementMy(
                         adInDatabase.Title,
                         adInDatabase.Details,
                         adInDatabase.MainPicture,
@@ -102,10 +102,10 @@ public class ViewMyAdvertismentsActivity extends AppCompatActivity implements Vi
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                AdvertismentInDatabase tempAd=dataSnapshot.getValue(AdvertismentInDatabase.class);
+                AdvertisementInDatabase tempAd=dataSnapshot.getValue(AdvertisementInDatabase.class);
                 String key=dataSnapshot.getKey();
                 int index=advertismentKeyList.indexOf(key);
-                AdvertismentMy ad=advertismentList.get(index);
+                AdvertisementMy ad=advertismentList.get(index);
                 ad.setDetails(tempAd.Details);
                 ad.setTitle(tempAd.Title);
                 ad.setMainPictureUri(tempAd.MainPicture);

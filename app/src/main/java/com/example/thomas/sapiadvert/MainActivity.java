@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
     //Recycle view
-    public static List<Advertisment> advertismentList;
+    public static List<Advertisement> advertisementList;
     public static List<String> advertismentKeyList;
     private RecyclerView advertismentRecyclerView;
     private RecyclerView.Adapter adapter;
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String tempProfilePictureUri= "";
     //search
     private EditText searchEditText;
-    private List<Advertisment> searchedAdvertismentList;
+    private List<Advertisement> searchedAdvertisementList;
     private List<String> searchedAdvertismentKeyList;
     // View Components
     private ImageView profilePicture;
@@ -83,13 +83,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //RECYCLER VIEW
         advertismentRecyclerView=findViewById(R.id.advertismentRecylerView);
         advertismentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        advertismentList=new ArrayList<>();
+        advertisementList =new ArrayList<>();
         advertismentKeyList=new ArrayList<>();
         //search
         searchEditText=findViewById(R.id.searchTextView);
-        searchedAdvertismentList=new ArrayList<>();
+        searchedAdvertisementList =new ArrayList<>();
         searchedAdvertismentKeyList=new ArrayList<>();
-        adapter=new MyAdapter(searchedAdvertismentList,this);
+        adapter=new MyAdapter(searchedAdvertisementList,this);
         advertismentRecyclerView.setAdapter(adapter);
 
         ///Database
@@ -98,9 +98,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         (databaseReference.child("Advertisments")).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Toast.makeText(MainActivity.this,"Child Added",Toast.LENGTH_LONG).show();
                 Log.i(tag, "PROBAAAA MIIIERRRRRRRRRRRRRRT");
 
-                final AdvertismentInDatabase tempAd=dataSnapshot.getValue(AdvertismentInDatabase.class);
+                final AdvertisementInDatabase tempAd=dataSnapshot.getValue(AdvertisementInDatabase.class);
                 final String key=dataSnapshot.getKey();
                 if (tempAd != null) {
                     databaseReference.child("Users").
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                         Log.i(tag, "Title: " + tempAd.Title);
                                         Log.i(tag, "Details: " + tempAd.Details);
                                         Log.i(tag, "ProfilePicture: " + tempProfilePictureUri);
-                                        advertismentList.add(new Advertisment(
+                                        advertisementList.add(new Advertisement(
                                                 tempAd.Title,
                                                 tempAd.Details,
                                                 tempAd.CreatedBy,
@@ -144,10 +145,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                AdvertismentInDatabase tempAd=dataSnapshot.getValue(AdvertismentInDatabase.class);
+                Toast.makeText(MainActivity.this,"Child Added",Toast.LENGTH_LONG).show();
+                AdvertisementInDatabase tempAd=dataSnapshot.getValue(AdvertisementInDatabase.class);
                 String key=dataSnapshot.getKey();
                 int index=advertismentKeyList.indexOf(key);
-                Advertisment ad=advertismentList.get(index);
+                Advertisement ad= advertisementList.get(index);
                 ad.setDetails(tempAd.Details);
                 ad.setTitle(tempAd.Title);
                 ad.setMainPictureUri(tempAd.MainPicture);
@@ -156,14 +158,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Toast.makeText(MainActivity.this,"Child Removed",Toast.LENGTH_LONG).show();
                 String key=dataSnapshot.getKey();
                 int index=advertismentKeyList.indexOf(key);
-                advertismentList.remove(index);
+                advertisementList.remove(index);
                 advertismentKeyList.remove(index);
 
                 index=searchedAdvertismentKeyList.indexOf(key);
                 if(-1!=index){
-                    searchedAdvertismentList.remove(index);
+                    searchedAdvertisementList.remove(index);
                     searchedAdvertismentKeyList.remove(index);
                 }
                 updateUI();
@@ -227,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onClick(View view) {
                    // finish();
-                    startActivity(new Intent(MainActivity.this, AdvertismentUploadActivity.class));
+                    startActivity(new Intent(MainActivity.this, AdvertisementUploadActivity.class));
                 }
             });
         }
@@ -286,12 +289,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * @param s search target
      */
     private void search(String s){
-        searchedAdvertismentList.clear();
+        searchedAdvertisementList.clear();
         searchedAdvertismentKeyList.clear();
         int i=0;
-        for (Advertisment temp : advertismentList) {
+        for (Advertisement temp : advertisementList) {
             if(Pattern.matches(s, temp.getTitle())||Pattern.matches(s, temp.getDetails())){
-                searchedAdvertismentList.add(temp);
+                searchedAdvertisementList.add(temp);
                 searchedAdvertismentKeyList.add(advertismentKeyList.get(i));
                 Log.i("SEARCH",temp.getTitle());
             }

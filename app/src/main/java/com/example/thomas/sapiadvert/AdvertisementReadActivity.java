@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -24,13 +23,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 /**
- * Activity for reading an advertisment
+ * Activity for reading an advertisement
  * @author Bondor Tamas
  * @author Kovacs Szabolcs
  */
-public class AdvertismentReadActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class AdvertisementReadActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private Advertisment advertisment;
+    private Advertisement advertisement;
     private TextView titleTextView;
     private TextView detailsTextView;
     private ImageView mainPictureImageView;
@@ -41,15 +40,15 @@ public class AdvertismentReadActivity extends AppCompatActivity implements OnMap
 
     /**
      * Initialising the activity
-     * Reading the information about the advertisment from the intent
+     * Reading the information about the advertisement from the intent
      * Setting up listeners for the apropiate buttons,views
      * @param savedInstanceState Saved instance
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_advertisment_read);
-        advertisment= getIntent().getExtras().getParcelable("Advertisment");
+        setContentView(R.layout.activity_advertisement_read);
+        advertisement = getIntent().getExtras().getParcelable("Advertisement");
 
         titleTextView=findViewById(R.id.ad_read_titleTextView);
         detailsTextView=findViewById(R.id.ad_read_detailsTextView);
@@ -59,16 +58,16 @@ public class AdvertismentReadActivity extends AppCompatActivity implements OnMap
 
         databaseReference= FirebaseDatabase.getInstance().getReference();
 
-        titleTextView.setText(advertisment.getTitle());
-        detailsTextView.setText(advertisment.getDetails());
-        Glide.with(AdvertismentReadActivity.this).load(advertisment.getMainPictureUri()).into(mainPictureImageView);
-        Glide.with(AdvertismentReadActivity.this).load(advertisment.getProfilePictureUri()).into(profilePictureImageView);
+        titleTextView.setText(advertisement.getTitle());
+        detailsTextView.setText(advertisement.getDetails());
+        Glide.with(AdvertisementReadActivity.this).load(advertisement.getMainPictureUri()).into(mainPictureImageView);
+        Glide.with(AdvertisementReadActivity.this).load(advertisement.getProfilePictureUri()).into(profilePictureImageView);
 
         profilePictureImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(AdvertismentReadActivity.this,ViewProfileActivity.class);
-                intent.putExtra("UserID",advertisment.getCreatedBy());
+                Intent intent=new Intent(AdvertisementReadActivity.this,ViewProfileActivity.class);
+                intent.putExtra("UserID", advertisement.getCreatedBy());
                 startActivity(intent);
             }
         });
@@ -77,7 +76,7 @@ public class AdvertismentReadActivity extends AppCompatActivity implements OnMap
             @Override
             public void onClick(View view) {
                 databaseReference.child("Users").
-                        child(advertisment.getCreatedBy()).
+                        child(advertisement.getCreatedBy()).
                         child("PhoneNumber").
                         addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -102,18 +101,18 @@ public class AdvertismentReadActivity extends AppCompatActivity implements OnMap
     }
 
     /**
-     * setting up the google maps fragment,creating a market to the location of the advertisment
+     * setting up the google maps fragment,creating a market to the location of the advertisement
      * @param googleMap googleMaps reference
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-       // Toast.makeText(AdvertismentReadActivity.this,advertisment.getLongitude()+":"+advertisment.getLatitude(),Toast.LENGTH_LONG).show();
+       // Toast.makeText(AdvertisementReadActivity.this,advertisement.getLongitude()+":"+advertisement.getLatitude(),Toast.LENGTH_LONG).show();
 
-       LatLng loc = new LatLng(advertisment.getLatitude(),advertisment.getLongitude());
+       LatLng loc = new LatLng(advertisement.getLatitude(), advertisement.getLongitude());
         googleMap.addMarker(new MarkerOptions().position(loc)
                 .title("Location"));
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
 
-       // Toast.makeText(AdvertismentReadActivity.this,advertisment.getLongitude()+":"+advertisment.getLatitude(),Toast.LENGTH_LONG).show();
+       // Toast.makeText(AdvertisementReadActivity.this,advertisement.getLongitude()+":"+advertisement.getLatitude(),Toast.LENGTH_LONG).show();
     }
 }
