@@ -26,7 +26,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 /**
- * Activity for creating and uploading new advertisment created by the curently logged in user
+ * Activity for creating and uploading new advertisement created by the curently logged in user
  * @author Bondor Tamas
  * @author Kovacs Szabolcs
  */
@@ -37,7 +37,7 @@ public class AdvertisementUploadActivity extends AppCompatActivity {
     private EditText titleEditText;
     private EditText detailssEditText;
     private ImageView mainPictureImageView;
-    private Button postAdvertismentButton;
+    private Button postAdvertisementButton;
     private Button backToMainButton;
     private Button selectLocationButton;
     private StorageReference firebaseStorage;
@@ -67,7 +67,7 @@ AdvertisementInDatabase ad;
         titleEditText=findViewById(R.id.titleEditText);
         detailssEditText=findViewById(R.id.detailsEditText);
         mainPictureImageView=findViewById(R.id.mainPictureImageView);
-        postAdvertismentButton=findViewById(R.id.postAdvertismentButton);
+        postAdvertisementButton=findViewById(R.id.postAdvertisementButton);
         backToMainButton=findViewById(R.id.backToMainButton);
         selectLocationButton=findViewById(R.id.selectLocationButton);
 
@@ -103,7 +103,7 @@ AdvertisementInDatabase ad;
                 startActivityForResult(intent,GALLERY_INTENT);
             }
         });
-        postAdvertismentButton.setOnClickListener(new View.OnClickListener() {
+        postAdvertisementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ad.Title=titleEditText.getText().toString().trim();
@@ -131,7 +131,7 @@ AdvertisementInDatabase ad;
                 ad.CreatedBy=currentUser.getUid();
 
                 final String key=FirebaseDatabase.getInstance().getReference().
-                        child("Advertisments")
+                        child("Advertisements")
                         .push().getKey();
 
                 StorageReference filepath=firebaseStorage.child("AdvertisementPictures").child(key);
@@ -141,7 +141,7 @@ AdvertisementInDatabase ad;
                         ad.MainPicture=taskSnapshot.getDownloadUrl().toString();
                         Toast.makeText(AdvertisementUploadActivity.this,"Main pic upload succes !",Toast.LENGTH_LONG).show();
                         FirebaseDatabase.getInstance().getReference().
-                                child("Advertisments")
+                                child("Advertisements")
                                 .child(key).setValue(ad);
                         finish();
                         //returnToMain();

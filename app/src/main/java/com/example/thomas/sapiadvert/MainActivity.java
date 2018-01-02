@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
 
 /**
  * Main activity of the application
- * Searching and listing from the uploaded advertisments
+ * Searching and listing from the uploaded advertisements
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private final String tag = "MainActivity";
@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseUser currentUser;
     //Recycle view
     public static List<Advertisement> advertisementList;
-    public static List<String> advertismentKeyList;
-    private RecyclerView advertismentRecyclerView;
+    public static List<String> advertisementKeyList;
+    private RecyclerView advertisementRecyclerView;
     private RecyclerView.Adapter adapter;
     ///
     //Database
@@ -50,10 +50,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //search
     private EditText searchEditText;
     private List<Advertisement> searchedAdvertisementList;
-    private List<String> searchedAdvertismentKeyList;
+    private List<String> searchedAdvertisementKeyList;
     // View Components
     private ImageView profilePicture;
-    private TextView addNewAdvertismentButton;
+    private TextView addNewAdvertisementButton;
     private Button logOutButton;
 
     /**
@@ -81,21 +81,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }*/
         //RECYCLER VIEW
-        advertismentRecyclerView=findViewById(R.id.advertismentRecylerView);
-        advertismentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        advertisementRecyclerView=findViewById(R.id.advertisementRecylerView);
+        advertisementRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         advertisementList =new ArrayList<>();
-        advertismentKeyList=new ArrayList<>();
+        advertisementKeyList=new ArrayList<>();
         //search
         searchEditText=findViewById(R.id.searchTextView);
         searchedAdvertisementList =new ArrayList<>();
-        searchedAdvertismentKeyList=new ArrayList<>();
+        searchedAdvertisementKeyList=new ArrayList<>();
         adapter=new MyAdapter(searchedAdvertisementList,this);
-        advertismentRecyclerView.setAdapter(adapter);
+        advertisementRecyclerView.setAdapter(adapter);
 
         ///Database
         databaseReference= FirebaseDatabase.getInstance().getReference();
 
-        (databaseReference.child("Advertisments")).addChildEventListener(new ChildEventListener() {
+        (databaseReference.child("Advertisements")).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Toast.makeText(MainActivity.this,"Child Added",Toast.LENGTH_LONG).show();
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                                 tempAd.Longitude,
                                                 tempAd.Latitude
                                         ));
-                                        advertismentKeyList.add(key);
+                                        advertisementKeyList.add(key);
                                         //myHandler.post(updateRunnable);
                                         // updateUI();
                                     }
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(MainActivity.this,"Child Added",Toast.LENGTH_LONG).show();
                 AdvertisementInDatabase tempAd=dataSnapshot.getValue(AdvertisementInDatabase.class);
                 String key=dataSnapshot.getKey();
-                int index=advertismentKeyList.indexOf(key);
+                int index=advertisementKeyList.indexOf(key);
                 Advertisement ad= advertisementList.get(index);
                 ad.setDetails(tempAd.Details);
                 ad.setTitle(tempAd.Title);
@@ -160,14 +160,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 Toast.makeText(MainActivity.this,"Child Removed",Toast.LENGTH_LONG).show();
                 String key=dataSnapshot.getKey();
-                int index=advertismentKeyList.indexOf(key);
+                int index=advertisementKeyList.indexOf(key);
                 advertisementList.remove(index);
-                advertismentKeyList.remove(index);
+                advertisementKeyList.remove(index);
 
-                index=searchedAdvertismentKeyList.indexOf(key);
+                index=searchedAdvertisementKeyList.indexOf(key);
                 if(-1!=index){
                     searchedAdvertisementList.remove(index);
-                    searchedAdvertismentKeyList.remove(index);
+                    searchedAdvertisementKeyList.remove(index);
                 }
                 updateUI();
             }
@@ -196,11 +196,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        addNewAdvertismentButton=findViewById(R.id.addNewAdvertismentButton);
+        addNewAdvertisementButton=findViewById(R.id.addNewAdvertisementButton);
         if ( currentUser == null ){
             // backToLoginPage();
             profilePicture.setVisibility(View.GONE);
-            addNewAdvertismentButton.setVisibility(View.GONE);
+            addNewAdvertisementButton.setVisibility(View.GONE);
         }
         else{
             databaseReference.child("Users").child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -226,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                      startActivity(intent);
                 }
             });
-            addNewAdvertismentButton.setOnClickListener(new View.OnClickListener() {
+            addNewAdvertisementButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                    // finish();
@@ -285,17 +285,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * searching between the advertisments
+     * searching between the advertisements
      * @param s search target
      */
     private void search(String s){
         searchedAdvertisementList.clear();
-        searchedAdvertismentKeyList.clear();
+        searchedAdvertisementKeyList.clear();
         int i=0;
         for (Advertisement temp : advertisementList) {
             if(Pattern.matches(s, temp.getTitle())||Pattern.matches(s, temp.getDetails())){
                 searchedAdvertisementList.add(temp);
-                searchedAdvertismentKeyList.add(advertismentKeyList.get(i));
+                searchedAdvertisementKeyList.add(advertisementKeyList.get(i));
                 Log.i("SEARCH",temp.getTitle());
             }
             ++i;

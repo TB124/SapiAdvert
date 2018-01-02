@@ -28,7 +28,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 /**
- * Activity for modoifying an existing advertisment
+ * Activity for modoifying an existing advertisement
  * @author Bondor Tamas
  * @author Kovacs Szabolcs
  */
@@ -36,15 +36,15 @@ public class AdvertisementModifyActivity extends AppCompatActivity{
 
     private static final int GALLERY_INTENT =123 ;
     private static final int PLACE_PICKER_REQUEST = 1;
-    private AdvertisementMy advertisment;
+    private AdvertisementMy advertisement;
     private AdvertisementInDatabase advertisementInDatabase;
-    private String advertismentKey;
+    private String advertisementKey;
     private EditText titleEditText;
     private EditText detailssEditText;
     private ImageView mainPictureImageView;
-    private Button modifyAdvertismentButton;
+    private Button modifyAdvertisementButton;
     private Button selectLocationButton;
-    private Button deleteAdvertismentButton;
+    private Button deleteAdvertisementButton;
     private StorageReference firebaseStorage;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
@@ -54,7 +54,7 @@ public class AdvertisementModifyActivity extends AppCompatActivity{
 
     /**
      * Initializing the advitiy
-     * Reading the informations about the advertisment from the intent
+     * Reading the informations about the advertisement from the intent
      * @param savedInstanceState Saved instances
      */
     @Override
@@ -66,38 +66,38 @@ public class AdvertisementModifyActivity extends AppCompatActivity{
         firebaseStorage= FirebaseStorage.getInstance().getReference();
         databaseReference= FirebaseDatabase.getInstance().getReference();
 
-        advertisment= getIntent().getExtras().getParcelable("Advertisement");
-        advertismentKey=getIntent().getStringExtra("AdvertismentKey");
+        advertisement= getIntent().getExtras().getParcelable("Advertisement");
+        advertisementKey=getIntent().getStringExtra("AdvertisementKey");
         advertisementInDatabase =new AdvertisementInDatabase(
                 firebaseAuth.getCurrentUser().getUid(),
-                advertisment.getTitle(),
-                advertisment.getDetails(),
-                advertisment.getMainPictureUri(),
-                advertisment.getLongitude(),
-                advertisment.getLatitude()
+                advertisement.getTitle(),
+                advertisement.getDetails(),
+                advertisement.getMainPictureUri(),
+                advertisement.getLongitude(),
+                advertisement.getLatitude()
         );
 
         titleEditText=findViewById(R.id.ad_modify_titleEditText);
         detailssEditText=findViewById(R.id.ad_modify_detailsEditText);
         mainPictureImageView=findViewById(R.id.ad_modify_mainPictureImageView);
-        modifyAdvertismentButton=findViewById(R.id.ad_modify_modifyAdvertismentButton);
+        modifyAdvertisementButton=findViewById(R.id.ad_modify_modifyAdvertisementButton);
         selectLocationButton=findViewById(R.id.ad_modify_selectLocationButton);
-        deleteAdvertismentButton=findViewById(R.id.ad_modify_deleteAdvertismentButton);
+        deleteAdvertisementButton=findViewById(R.id.ad_modify_deleteAdvertisementButton);
 
-        titleEditText.setText(advertisment.getTitle());
-        detailssEditText.setText(advertisment.getDetails());
-        Glide.with(AdvertisementModifyActivity.this).load(advertisment.getMainPictureUri()).into(mainPictureImageView);
+        titleEditText.setText(advertisement.getTitle());
+        detailssEditText.setText(advertisement.getDetails());
+        Glide.with(AdvertisementModifyActivity.this).load(advertisement.getMainPictureUri()).into(mainPictureImageView);
 
 
-        deleteAdvertismentButton.setOnClickListener(new View.OnClickListener() {
+        deleteAdvertisementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog alertDialog = new AlertDialog.Builder(
                         AdvertisementModifyActivity.this).setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // Write your code here to execute after dialog closed
-                        firebaseStorage.child(advertismentKey).delete();
-                        databaseReference.child("Advertisments").child(advertismentKey).removeValue();
+                        firebaseStorage.child(advertisementKey).delete();
+                        databaseReference.child("Advertisements").child(advertisementKey).removeValue();
                         finish();
 
                     }
@@ -141,7 +141,7 @@ public class AdvertisementModifyActivity extends AppCompatActivity{
                 startActivityForResult(intent,GALLERY_INTENT);
             }
         });
-        modifyAdvertismentButton.setOnClickListener(new View.OnClickListener() {
+        modifyAdvertisementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(AdvertisementModifyActivity.this, "MODIFY !", Toast.LENGTH_LONG).show();
@@ -166,7 +166,7 @@ public class AdvertisementModifyActivity extends AppCompatActivity{
                         Toast.makeText(AdvertisementModifyActivity.this,"Please select a picture !",Toast.LENGTH_LONG);
                         return;
                     }
-                    StorageReference filepath = firebaseStorage.child("AdvertisementPictures").child(advertismentKey);
+                    StorageReference filepath = firebaseStorage.child("AdvertisementPictures").child(advertisementKey);
                     filepath.putFile(mainImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -174,8 +174,8 @@ public class AdvertisementModifyActivity extends AppCompatActivity{
                             Toast.makeText(AdvertisementModifyActivity.this, "Main pic upload succes !", Toast.LENGTH_LONG).show();
 
                             FirebaseDatabase.getInstance().getReference().
-                                    child("Advertisments")
-                                    .child(advertismentKey).setValue(advertisementInDatabase);
+                                    child("Advertisements")
+                                    .child(advertisementKey).setValue(advertisementInDatabase);
                             finish();
 
                             //startMainActivity();
@@ -190,8 +190,8 @@ public class AdvertisementModifyActivity extends AppCompatActivity{
                 else{
                     Toast.makeText(AdvertisementModifyActivity.this, "Profil nem valtozott !", Toast.LENGTH_LONG).show();
                     FirebaseDatabase.getInstance().getReference().
-                            child("Advertisments")
-                            .child(advertismentKey).setValue(advertisementInDatabase);
+                            child("Advertisements")
+                            .child(advertisementKey).setValue(advertisementInDatabase);
                     finish();
                 }
             }

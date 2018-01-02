@@ -42,16 +42,16 @@
             android:text="Select Location" />
 
         <Button
-            android:id="@+id/ad_modify_deleteAdvertismentButton"
+            android:id="@+id/ad_modify_deleteAdvertisementButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Delete Advertisment" />
+            android:text="Delete Advertisement" />
 
         <Button
-            android:id="@+id/ad_modify_modifyAdvertismentButton"
+            android:id="@+id/ad_modify_modifyAdvertisementButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Modify Advertisment" />
+            android:text="Modify Advertisement" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

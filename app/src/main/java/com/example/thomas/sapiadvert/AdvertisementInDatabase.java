@@ -1,7 +1,7 @@
 package com.example.thomas.sapiadvert;
 
 /**
- * Struct to represent an advertisment in the firebase database
+ * Struct to represent an advertisement in the firebase database
  * @author Bondor Tamas
  * @author Kovacs Szabolcs
  */
@@ -13,27 +13,27 @@ public class AdvertisementInDatabase {
     public String CreatedBy;
 
     /**
-     * title of the advertisment
+     * title of the advertisement
      */
     public String Title;
 
     /**
-     * details of the advertisment
+     * details of the advertisement
      */
     public String Details;
 
     /**
-     * Uri to the main picture of the advertisment
+     * Uri to the main picture of the advertisement
      */
     public String MainPicture;
 
     /**
-     * longitude information of the advertisment
+     * longitude information of the advertisement
      */
     public double Longitude;
 
     /**
-     * latitude information of the advertisment
+     * latitude information of the advertisement
      */
     public double Latitude;
 
@@ -45,8 +45,8 @@ public class AdvertisementInDatabase {
     }
 
     /**
-     * function to convert the advertisment to String, debugging purposes
-     * @return string containing all necesary data about the advertisment
+     * function to convert the advertisement to String, debugging purposes
+     * @return string containing all necesary data about the advertisement
      */
     @Override
     public String toString() {
@@ -63,11 +63,11 @@ public class AdvertisementInDatabase {
     /**
      *
      * @param CreatedBy Id of the advertiser
-     * @param Title Title of the advertisment
-     * @param Details Details of the advertisment
-     * @param MainPicture Uri to the main picture of the advertisment
-     * @param Longitude longitude information about the advertisment
-     * @param Latitude latitude information about the advertisment
+     * @param Title Title of the advertisement
+     * @param Details Details of the advertisement
+     * @param MainPicture Uri to the main picture of the advertisement
+     * @param Longitude longitude information about the advertisement
+     * @param Latitude latitude information about the advertisement
      */
     AdvertisementInDatabase(String CreatedBy,
                             String Title,

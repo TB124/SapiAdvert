@@ -16,18 +16,18 @@ import com.google.firebase.storage.StorageReference;
 import java.util.List;
 
 /**
- * Adapter for the recycler view that holds the advertisment created by the curently logged in user
+ * Adapter for the recycler view that holds the advertisement created by the curently logged in user
  */
 public class MyAdvertisementsAdapter extends RecyclerView.Adapter<MyAdvertisementsAdapter.ViewHolder>{
 
-    private List<AdvertisementMy> advertismentList;
-    private List<String> advertismentKeyList;
+    private List<AdvertisementMy> advertisementList;
+    private List<String> advertisementKeyList;
     private Context context;
     private StorageReference firebaseStorage= FirebaseStorage.getInstance().getReference();
 
-    MyAdvertisementsAdapter(List<AdvertisementMy> advertismentList, List<String> advertismentKeyList, Context context) {
-        this.advertismentList = advertismentList;
-        this.advertismentKeyList = advertismentKeyList;
+    MyAdvertisementsAdapter(List<AdvertisementMy> advertisementList, List<String> advertisementKeyList, Context context) {
+        this.advertisementList = advertisementList;
+        this.advertisementKeyList = advertisementKeyList;
         this.context = context;
     }
 
@@ -39,17 +39,17 @@ public class MyAdvertisementsAdapter extends RecyclerView.Adapter<MyAdvertisemen
 
     @Override
     public void onBindViewHolder(MyAdvertisementsAdapter.ViewHolder holder, int position) {
-        AdvertisementMy advertisment = advertismentList.get(position);
-        holder.titleText.setText(advertisment.getTitle());
-        holder.detailText.setText(advertisment.getDetails());
-        Glide.with(context).load(advertisment.getMainPictureUri()).into(holder.mainImageView);
-        holder.bind(advertisment,advertismentKeyList.get(position));
+        AdvertisementMy advertisement = advertisementList.get(position);
+        holder.titleText.setText(advertisement.getTitle());
+        holder.detailText.setText(advertisement.getDetails());
+        Glide.with(context).load(advertisement.getMainPictureUri()).into(holder.mainImageView);
+        holder.bind(advertisement,advertisementKeyList.get(position));
 
     }
 
     @Override
     public int getItemCount() {
-        return advertismentList.size();
+        return advertisementList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -67,7 +67,7 @@ public class MyAdvertisementsAdapter extends RecyclerView.Adapter<MyAdvertisemen
         }
 
         /**
-         * attaching onclicklistener on the advertisments
+         * attaching onclicklistener on the advertisements
          * @param ad
          * @param key
          */
@@ -78,7 +78,7 @@ public class MyAdvertisementsAdapter extends RecyclerView.Adapter<MyAdvertisemen
                 public void onClick(View view) {
                     Intent myIntent = new Intent(context,AdvertisementModifyActivity.class);
                     myIntent.putExtra("Advertisement",ad);
-                    myIntent.putExtra("AdvertismentKey",key);
+                    myIntent.putExtra("AdvertisementKey",key);
                     context.startActivity(myIntent);
                 }
             };

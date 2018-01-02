@@ -42,10 +42,10 @@
             android:text="Select location" />
 
         <Button
-            android:id="@+id/postAdvertismentButton"
+            android:id="@+id/postAdvertisementButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Post Advertisment" />
+            android:text="Post Advertisement" />
 
         <Button
             android:id="@+id/backToMainButton"
