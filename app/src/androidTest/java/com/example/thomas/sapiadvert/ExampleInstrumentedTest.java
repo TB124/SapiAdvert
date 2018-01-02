@@ -66,6 +66,12 @@ public class ExampleInstrumentedTest {
         testOpen();
         //Espresso.pressBack();
     }
+    @Test
+    public void profileEditCheck(){
+        setUp(EditProfileActivity.class.getName());
+        onView(withId(R.id.ad_read_profilePictureImageView)).perform(closeSoftKeyboard(),click());
+        testOpen();
+    }
 
     private Instrumentation.ActivityMonitor mBrowserActivityMonitor;
 
