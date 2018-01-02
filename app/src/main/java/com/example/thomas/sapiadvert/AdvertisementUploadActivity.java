@@ -1,16 +1,12 @@
 package com.example.thomas.sapiadvert;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,34 +16,28 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.HashMap;
-
 /**
- * Activity for creating and uploading new advertisment created by the curently logged in user
+ * Activity for creating and uploading new advertisement created by the curently logged in user
  * @author Bondor Tamas
  * @author Kovacs Szabolcs
  */
-public class AdvertismentUploadActivity extends AppCompatActivity {
+public class AdvertisementUploadActivity extends AppCompatActivity {
 
     private static final int GALLERY_INTENT =123 ;
     private static final int PLACE_PICKER_REQUEST = 1;
     private EditText titleEditText;
     private EditText detailssEditText;
     private ImageView mainPictureImageView;
-    private Button postAdvertismentButton;
+    private Button postAdvertisementButton;
     private Button backToMainButton;
     private Button selectLocationButton;
     private StorageReference firebaseStorage;
@@ -61,7 +51,7 @@ public class AdvertismentUploadActivity extends AppCompatActivity {
     private boolean locationSelected=false;
 
 ///
-AdvertismentInDatabase ad;
+AdvertisementInDatabase ad;
     ///
 
     /**
@@ -71,13 +61,13 @@ AdvertismentInDatabase ad;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_advertisment_upload);
+        setContentView(R.layout.activity_advertisement_upload);
 
-        ad=new AdvertismentInDatabase();
+        ad=new AdvertisementInDatabase();
         titleEditText=findViewById(R.id.titleEditText);
         detailssEditText=findViewById(R.id.detailsEditText);
         mainPictureImageView=findViewById(R.id.mainPictureImageView);
-        postAdvertismentButton=findViewById(R.id.postAdvertismentButton);
+        postAdvertisementButton=findViewById(R.id.postAdvertisementButton);
         backToMainButton=findViewById(R.id.backToMainButton);
         selectLocationButton=findViewById(R.id.selectLocationButton);
 
@@ -91,7 +81,7 @@ AdvertismentInDatabase ad;
                 PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
 
                 try {
-                    startActivityForResult(builder.build(AdvertismentUploadActivity.this), PLACE_PICKER_REQUEST);
+                    startActivityForResult(builder.build(AdvertisementUploadActivity.this), PLACE_PICKER_REQUEST);
                 }
                 catch(Throwable ex){
 
@@ -113,26 +103,26 @@ AdvertismentInDatabase ad;
                 startActivityForResult(intent,GALLERY_INTENT);
             }
         });
-        postAdvertismentButton.setOnClickListener(new View.OnClickListener() {
+        postAdvertisementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ad.Title=titleEditText.getText().toString().trim();
                 ad.Details=detailssEditText.getText().toString().trim();
 
                 if(TextUtils.isEmpty(ad.Title)){
-                    Toast.makeText(AdvertismentUploadActivity.this,"Please enter a title !",Toast.LENGTH_LONG).show();
+                    Toast.makeText(AdvertisementUploadActivity.this,"Please enter a title !",Toast.LENGTH_LONG).show();
                     return;
                 }
                 if(TextUtils.isEmpty(ad.Details)){
-                    Toast.makeText(AdvertismentUploadActivity.this,"Please enter some details !",Toast.LENGTH_LONG).show();
+                    Toast.makeText(AdvertisementUploadActivity.this,"Please enter some details !",Toast.LENGTH_LONG).show();
                     return;
                 }
                 if(mainImage==null){
-                    Toast.makeText(AdvertismentUploadActivity.this,"Please select a picture !",Toast.LENGTH_LONG).show();
+                    Toast.makeText(AdvertisementUploadActivity.this,"Please select a picture !",Toast.LENGTH_LONG).show();
                     return;
                 }
                 if(!locationSelected){
-                    Toast.makeText(AdvertismentUploadActivity.this,"Please select a location !",Toast.LENGTH_LONG).show();
+                    Toast.makeText(AdvertisementUploadActivity.this,"Please select a location !",Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -141,7 +131,7 @@ AdvertismentInDatabase ad;
                 ad.CreatedBy=currentUser.getUid();
 
                 final String key=FirebaseDatabase.getInstance().getReference().
-                        child("Advertisments")
+                        child("Advertisements")
                         .push().getKey();
 
                 StorageReference filepath=firebaseStorage.child("AdvertisementPictures").child(key);
@@ -149,18 +139,19 @@ AdvertismentInDatabase ad;
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         ad.MainPicture=taskSnapshot.getDownloadUrl().toString();
-                        Toast.makeText(AdvertismentUploadActivity.this,"Main pic upload succes !",Toast.LENGTH_LONG).show();
+                        Toast.makeText(AdvertisementUploadActivity.this,"Main pic upload succes !",Toast.LENGTH_LONG).show();
                         FirebaseDatabase.getInstance().getReference().
-                                child("Advertisments")
+                                child("Advertisements")
                                 .child(key).setValue(ad);
-                        returnToMain();
+                        finish();
+                        //returnToMain();
 
                         //startMainActivity();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(AdvertismentUploadActivity.this,"Error!:"+e,Toast.LENGTH_LONG).show();
+                        Toast.makeText(AdvertisementUploadActivity.this,"Error!:"+e,Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -190,7 +181,7 @@ AdvertismentInDatabase ad;
             case GALLERY_INTENT:{
                 if (resultCode == RESULT_OK) {
                     mainImage = data.getData();
-                    Glide.with(AdvertismentUploadActivity.this).load(mainImage).into(mainPictureImageView);
+                    Glide.with(AdvertisementUploadActivity.this).load(mainImage).into(mainPictureImageView);
                     break;
                 }
             }

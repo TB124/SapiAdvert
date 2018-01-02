@@ -8,7 +8,7 @@
     android:padding="10dp">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/advertismentRecylerView"
+        android:id="@+id/advertisementRecylerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/ad_read_profilePictureImageView"
-        android:layout_toStartOf="@+id/addNewAdvertismentButton"
+        android:layout_toStartOf="@+id/addNewAdvertisementButton"
         android:imeOptions="actionSearch"
         android:ems="10"
         android:hint="@string/search"
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/advertismentRecylerView">
+        android:layout_above="@+id/advertisementRecylerView">
         <Button
             android:id="@+id/logOutButton"
             android:layout_width="wrap_content"
@@ -48,10 +48,10 @@
     </GridLayout>
 
     <TextView
-        android:id="@+id/addNewAdvertismentButton"
+        android:id="@+id/addNewAdvertisementButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_above="@+id/advertismentRecylerView"
+        android:layout_above="@+id/advertisementRecylerView"
         android:layout_toStartOf="@+id/ad_read_profilePictureImageView"
         android:text="@string/add" />
 

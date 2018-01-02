@@ -5,21 +5,21 @@ import android.os.Parcelable;
 
 
 /**
-* The Advertisment class is used for represent an advertisment in the MainActivity
+* The Advertisement class is used for represent an advertisement in the MainActivity
  * @author      Bondor Tamas
  * @author      Kovacs Szabolcs
  */
 
-public class Advertisment implements Parcelable {
+public class Advertisement implements Parcelable {
 
 
     /**
-     *  title of the advertisment
+     *  title of the advertisement
      */
     private String title;
 
     /**
-    * Details of the advertisment
+    * Details of the advertisement
      */
     private String details;
 
@@ -34,7 +34,7 @@ public class Advertisment implements Parcelable {
     private String profilePictureUri;
 
     /**
-     * Url to the main pictore of advertisment
+     * Url to the main pictore of advertisement
      */
     private String mainPictureUri;
 
@@ -44,23 +44,23 @@ public class Advertisment implements Parcelable {
     private double longitude;
 
     /**
-     * latitude information about the advertisment
+     * latitude information about the advertisement
      */
     private double latitude;
 
     /**
      * detault constructor
      */
-    public Advertisment (){
+    public Advertisement(){
 
     }
 
 
     /**
-     * Constructor, creating a class from a parcel(retreiving advertisment from intent)
+     * Constructor, creating a class from a parcel(retreiving advertisement from intent)
      * @param in parcel
      */
-    protected Advertisment(Parcel in) {
+    protected Advertisement(Parcel in) {
         title = in.readString();
         details = in.readString();
         createdBy = in.readString();
@@ -70,15 +70,15 @@ public class Advertisment implements Parcelable {
         latitude=Double.parseDouble(in.readString());
     }
 
-    public static final Creator<Advertisment> CREATOR = new Creator<Advertisment>() {
+    public static final Creator<Advertisement> CREATOR = new Creator<Advertisement>() {
         @Override
-        public Advertisment createFromParcel(Parcel in) {
-            return new Advertisment(in);
+        public Advertisement createFromParcel(Parcel in) {
+            return new Advertisement(in);
         }
 
         @Override
-        public Advertisment[] newArray(int size) {
-            return new Advertisment[size];
+        public Advertisement[] newArray(int size) {
+            return new Advertisement[size];
         }
     };
 
@@ -115,8 +115,8 @@ public class Advertisment implements Parcelable {
     }
 
     /**
-     * setter for chaning the Uri to the main picture of the advertisment
-     * @param mainPictureUri new Uri to the main picture of the advertisment
+     * setter for chaning the Uri to the main picture of the advertisement
+     * @param mainPictureUri new Uri to the main picture of the advertisement
      */
     public void setMainPictureUri(String mainPictureUri) {
         this.mainPictureUri = mainPictureUri;
@@ -124,22 +124,22 @@ public class Advertisment implements Parcelable {
 
 
     /**
-     * Contructor for creating an advertisment
+     * Contructor for creating an advertisement
      * @param title title
      * @param details details
      * @param createdBy ID of the advertiser
      * @param profilePictureUri Uri to the profile picture of the advertiser
-     * @param mainPictureUri Uri to the main picture of the advertisment
+     * @param mainPictureUri Uri to the main picture of the advertisement
      * @param longitude longitude information
      * @param latitude latiude information
      */
-    public Advertisment(String title,
-                        String details,
-                        String createdBy,
-                        String profilePictureUri,
-                        String mainPictureUri,
-                        double longitude,
-                        double latitude) {
+    public Advertisement(String title,
+                         String details,
+                         String createdBy,
+                         String profilePictureUri,
+                         String mainPictureUri,
+                         double longitude,
+                         double latitude) {
         this.title = title;
         this.details = details;
         this.createdBy = createdBy;
@@ -150,16 +150,16 @@ public class Advertisment implements Parcelable {
     }
 
     /**
-     * getter for the title of advertisment
-     * @return the title of the advertisment
+     * getter for the title of advertisement
+     * @return the title of the advertisement
      */
     public String getTitle() {
         return title;
     }
 
     /**
-     * getter for the details of the advertisment
-     * @return the details of the advertisment
+     * getter for the details of the advertisement
+     * @return the details of the advertisement
      */
     public String getDetails() {
         return details;
@@ -183,8 +183,8 @@ public class Advertisment implements Parcelable {
 
 
     /**
-     * getter for the Uri of the main picture of the advertisment
-     * @return Uri to the main picture of the advertisment
+     * getter for the Uri of the main picture of the advertisement
+     * @return Uri to the main picture of the advertisement
      */
     public String getMainPictureUri() {
         return mainPictureUri;
@@ -192,7 +192,7 @@ public class Advertisment implements Parcelable {
 
     /**
      * getter for the longitude information
-     * @return longitude information about the advertisment
+     * @return longitude information about the advertisement
      */
     public double getLongitude() {
         return longitude;
@@ -200,7 +200,7 @@ public class Advertisment implements Parcelable {
 
     /**
      * getter for the latitude information
-     * @return latitude information about the advertisment
+     * @return latitude information about the advertisement
      */
     public double getLatitude() {
         return latitude;
@@ -216,7 +216,7 @@ public class Advertisment implements Parcelable {
     }
 
     /**
-     * function to write the advertisment into parcel
+     * function to write the advertisement into parcel
      * @param parcel
      * @param i
      */

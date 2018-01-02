@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.thomas.sapiadvert.AdvertismentModifyActivity">
+    tools:context="com.example.thomas.sapiadvert.AdvertisementModifyActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -42,16 +42,16 @@
             android:text="Select Location" />
 
         <Button
-            android:id="@+id/ad_modify_deleteAdvertismentButton"
+            android:id="@+id/ad_modify_deleteAdvertisementButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Delete Advertisment" />
+            android:text="Delete Advertisement" />
 
         <Button
-            android:id="@+id/ad_modify_modifyAdvertismentButton"
+            android:id="@+id/ad_modify_modifyAdvertisementButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Modify Advertisment" />
+            android:text="Modify Advertisement" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -35,12 +35,12 @@
         </activity>
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".AdvertismentUploadActivity" />
-        <activity android:name=".AdvertismentReadActivity" />
-        <activity android:name=".AdvertismentModifyActivity" />
+        <activity android:name=".AdvertisementUploadActivity" />
+        <activity android:name=".AdvertisementReadActivity" />
+        <activity android:name=".AdvertisementModifyActivity" />
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".ViewProfileActivity" />
-        <activity android:name=".ViewMyAdvertismentsActivity" />
+        <activity android:name=".ViewMyAdvertisementsActivity" />
     </application>
 
 </manifest>

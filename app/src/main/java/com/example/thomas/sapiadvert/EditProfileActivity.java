@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,8 +22,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
-import java.net.URI;
 
 /**
  * This Activity will show the logged in users' profile, and give him the possibility
@@ -180,7 +177,7 @@ public class EditProfileActivity extends Activity implements View.OnClickListene
      */
     private void viewMyAdvertisements(){
         finish();
-        startActivity(new Intent(this, ViewMyAdvertismentsActivity.class));
+        startActivity(new Intent(this, ViewMyAdvertisementsActivity.class));
     }
     /**
      * OnClick listeners for the elements.

@@ -4,9 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Class to represent an advertisment created by the user
+ * Class to represent an advertisement created by the user
  */
-public class AdvertismentMy implements Parcelable {
+public class AdvertisementMy implements Parcelable {
     private String title;
     private String details;
     private String mainPictureUri;
@@ -14,10 +14,10 @@ public class AdvertismentMy implements Parcelable {
     private double latitude;
 
     /**
-     * funtion to create an advertisment from a parcel (creating advertisment from intent)
+     * funtion to create an advertisement from a parcel (creating advertisement from intent)
      * @param in parcel
      */
-    protected AdvertismentMy(Parcel in) {
+    protected AdvertisementMy(Parcel in) {
         title = in.readString();
         details = in.readString();
         mainPictureUri = in.readString();
@@ -25,15 +25,15 @@ public class AdvertismentMy implements Parcelable {
         latitude = in.readDouble();
     }
 
-    public static final Creator<AdvertismentMy> CREATOR = new Creator<AdvertismentMy>() {
+    public static final Creator<AdvertisementMy> CREATOR = new Creator<AdvertisementMy>() {
         @Override
-        public AdvertismentMy createFromParcel(Parcel in) {
-            return new AdvertismentMy(in);
+        public AdvertisementMy createFromParcel(Parcel in) {
+            return new AdvertisementMy(in);
         }
 
         @Override
-        public AdvertismentMy[] newArray(int size) {
-            return new AdvertismentMy[size];
+        public AdvertisementMy[] newArray(int size) {
+            return new AdvertisementMy[size];
         }
     };
 
@@ -54,8 +54,8 @@ public class AdvertismentMy implements Parcelable {
     }
 
     /**
-     * setter for chaning the Uri to the main picture of the advertisment
-     * @param mainPictureUri new Uri to the main picture of the advertisment
+     * setter for chaning the Uri to the main picture of the advertisement
+     * @param mainPictureUri new Uri to the main picture of the advertisement
      */
     public void setMainPictureUri(String mainPictureUri) {
         this.mainPictureUri = mainPictureUri;
@@ -79,13 +79,13 @@ public class AdvertismentMy implements Parcelable {
 
     /**
      * Constructor
-     * @param title title of the advertisment
-     * @param details detials of the advertisment
-     * @param mainPictureUri uri to the main picture of the advertisment
-     * @param longitude longitude information about the advertisment
-     * @param latitude latitude information about the advertisment
+     * @param title title of the advertisement
+     * @param details detials of the advertisement
+     * @param mainPictureUri uri to the main picture of the advertisement
+     * @param longitude longitude information about the advertisement
+     * @param latitude latitude information about the advertisement
      */
-    public AdvertismentMy(String title, String details, String mainPictureUri, double longitude, double latitude) {
+    public AdvertisementMy(String title, String details, String mainPictureUri, double longitude, double latitude) {
         this.title = title;
         this.details = details;
         this.mainPictureUri = mainPictureUri;
@@ -95,7 +95,7 @@ public class AdvertismentMy implements Parcelable {
 
     /**
      * getter for the latitude information
-     * @return latitude information about the advertisment
+     * @return latitude information about the advertisement
      */
     public double getLatitude() {
         return latitude;
@@ -103,7 +103,7 @@ public class AdvertismentMy implements Parcelable {
 
     /**
      * getter for the longitude information
-     * @return longitude information about the advertisment
+     * @return longitude information about the advertisement
      */
     public double getLongitude() {
         return longitude;
@@ -114,28 +114,28 @@ public class AdvertismentMy implements Parcelable {
     }
 
     /**
-     * getter for the details of the advertisment
-     * @return the details of the advertisment
+     * getter for the details of the advertisement
+     * @return the details of the advertisement
      */
     public String getDetails() {
         return details;
     }
 
     /**
-     * getter for the title of advertisment
-     * @return the title of the advertisment
+     * getter for the title of advertisement
+     * @return the title of the advertisement
      */
     public String getTitle() {
         return title;
     }
 
     /**
-     * converting the advertisment to String for debugging purposess
-     * @return return the String representing the advertisment
+     * converting the advertisement to String for debugging purposess
+     * @return return the String representing the advertisement
      */
     @Override
     public String toString() {
-        return "AdvertismentMy{" +
+        return "AdvertisementMy{" +
                 "title='" + title + '\'' +
                 ", details='" + details + '\'' +
                 ", mainPictureUri='" + mainPictureUri + '\'' +
@@ -154,7 +154,7 @@ public class AdvertismentMy implements Parcelable {
     }
 
     /**
-     * writing the advertisment into a parcel ( sending in intent)
+     * writing the advertisement into a parcel ( sending in intent)
      * @param dest
      * @param flags
      */

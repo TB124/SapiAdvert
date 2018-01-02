@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.thomas.sapiadvert.AdvertismentUploadActivity">
+    tools:context="com.example.thomas.sapiadvert.AdvertisementUploadActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -42,10 +42,10 @@
             android:text="Select location" />
 
         <Button
-            android:id="@+id/postAdvertismentButton"
+            android:id="@+id/postAdvertisementButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Post Advertisment" />
+            android:text="Post Advertisement" />
 
         <Button
             android:id="@+id/backToMainButton"
