@@ -76,10 +76,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
 
-        /*if ( currentUser == null ) {
-            backToLoginPage();
-            return;
-        }*/
         //RECYCLER VIEW
         advertismentRecyclerView=findViewById(R.id.advertismentRecylerView);
         advertismentRecyclerView.setLayoutManager(new LinearLayoutManager(this));

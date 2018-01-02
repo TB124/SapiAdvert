@@ -106,7 +106,12 @@ public class EditProfileActivity extends Activity implements View.OnClickListene
                         if (temp != null ) {
                             firstNameInput.setText(temp.FirstName);
                             lastNameInput.setText(temp.LastName);
-                            emailInput.setText(temp.EmailAddress);
+                            if (!temp.EmailAddress.isEmpty()) {
+                                emailInput.setText(temp.EmailAddress);
+                            }
+                            else{
+                                emailInput.setText(currentUser.getEmail());
+                            }
                             phoneNumberInput.setText(temp.PhoneNumber);
                             if (temp.ProfilePicture != null ) {
                                 Glide.with(EditProfileActivity.this).load(temp.ProfilePicture).into(profilePictureInput);
