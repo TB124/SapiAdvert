@@ -94,9 +94,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         (databaseReference.child("Advertisements")).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Toast.makeText(MainActivity.this,"Child Added",Toast.LENGTH_LONG).show();
-                Log.i(tag, "PROBAAAA MIIIERRRRRRRRRRRRRRT");
-
                 final AdvertisementInDatabase tempAd=dataSnapshot.getValue(AdvertisementInDatabase.class);
                 final String key=dataSnapshot.getKey();
                 if (tempAd != null) {
@@ -219,13 +216,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onClick(View view) {
                     Intent intent=new Intent(MainActivity.this,EditProfileActivity.class);
-                     startActivity(intent);
+                    startActivity(intent);
                 }
             });
             addNewAdvertisementButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                   // finish();
+                    finish();
                     startActivity(new Intent(MainActivity.this, AdvertisementUploadActivity.class));
                 }
             });
@@ -251,17 +248,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // Switch view
             goToEditPage();
         }
-    }
-
-    /**
-     *opens the profile for read only  of the desired user
-     * @param userID Id of the user
-     */
-    private void viewProfilePage(String userID){
-        finish();
-        Intent viewProfile = new Intent(this, ViewProfileActivity.class);
-        viewProfile.putExtra("UserID", userID);
-        startActivity(viewProfile);
     }
 
     /**

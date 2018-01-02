@@ -143,10 +143,7 @@ AdvertisementInDatabase ad;
                         FirebaseDatabase.getInstance().getReference().
                                 child("Advertisements")
                                 .child(key).setValue(ad);
-                        finish();
-                        //returnToMain();
-
-                        //startMainActivity();
+                        returnToMain();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
