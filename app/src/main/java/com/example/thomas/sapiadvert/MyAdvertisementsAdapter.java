@@ -16,7 +16,9 @@ import com.google.firebase.storage.StorageReference;
 import java.util.List;
 
 /**
- * Adapter for the recycler view that holds the advertisement created by the curently logged in user
+ * Adapter for the recycler view that holds the advertisement created by the currently logged in user
+ * @author Bondor Tamas
+ * @author Kovacs Szabolcs
  */
 public class MyAdvertisementsAdapter extends RecyclerView.Adapter<MyAdvertisementsAdapter.ViewHolder>{
 
@@ -67,9 +69,9 @@ public class MyAdvertisementsAdapter extends RecyclerView.Adapter<MyAdvertisemen
         }
 
         /**
-         * attaching onclicklistener on the advertisements
-         * @param ad
-         * @param key
+         * attaching onClickListener on the advertisements
+         * @param ad advertisement
+         * @param key advertisement key
          */
         void bind(final AdvertisementMy ad, final String key){
 

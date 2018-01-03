@@ -5,59 +5,29 @@ import android.os.Parcelable;
 
 
 /**
-* The Advertisement class is used for represent an advertisement in the MainActivity
- * @author      Bondor Tamas
- * @author      Kovacs Szabolcs
+ *The Advertisement class is used for represent an advertisement in the MainActivity
+ * @author Bondor Tamas
+ * @author Kovacs Szabolcs
  */
 
 public class Advertisement implements Parcelable {
 
-
-    /**
-     *  title of the advertisement
-     */
     private String title;
-
-    /**
-    * Details of the advertisement
-     */
     private String details;
-
-    /**
-     * The ID of advertiser
-     */
     private String createdBy;
-
-    /**
-     * Url to the profile picture of the advertiser
-     */
     private String profilePictureUri;
-
-    /**
-     * Url to the main pictore of advertisement
-     */
     private String mainPictureUri;
-
-    /**
-     * longitud information about the avertisment
-     */
     private double longitude;
-
-    /**
-     * latitude information about the advertisement
-     */
     private double latitude;
 
     /**
-     * detault constructor
+     * default constructor
      */
-    public Advertisement(){
-
-    }
+    public Advertisement(){}
 
 
     /**
-     * Constructor, creating a class from a parcel(retreiving advertisement from intent)
+     * Constructor, creating a class from a parcel(retrieving advertisement from intent)
      * @param in parcel
      */
     protected Advertisement(Parcel in) {
@@ -124,7 +94,7 @@ public class Advertisement implements Parcelable {
 
 
     /**
-     * Contructor for creating an advertisement
+     * Setter constructor
      * @param title title
      * @param details details
      * @param createdBy ID of the advertiser
@@ -208,7 +178,7 @@ public class Advertisement implements Parcelable {
 
     /**
      * dummy
-     * @return dummy
+     * @return 0
      */
     @Override
     public int describeContents() {
@@ -217,8 +187,8 @@ public class Advertisement implements Parcelable {
 
     /**
      * function to write the advertisement into parcel
-     * @param parcel
-     * @param i
+     * @param parcel destination
+     * @param i flag
      */
     @Override
     public void writeToParcel(Parcel parcel, int i) {

@@ -7,38 +7,16 @@ package com.example.thomas.sapiadvert;
  */
 
 public class AdvertisementInDatabase {
-    /**
-     * ID of the advertiser
-     */
+
     public String CreatedBy;
-
-    /**
-     * title of the advertisement
-     */
     public String Title;
-
-    /**
-     * details of the advertisement
-     */
     public String Details;
-
-    /**
-     * Uri to the main picture of the advertisement
-     */
     public String MainPicture;
-
-    /**
-     * longitude information of the advertisement
-     */
     public double Longitude;
-
-    /**
-     * latitude information of the advertisement
-     */
     public double Latitude;
 
     /**
-     * default consturctor
+     * default constructor
      */
     public AdvertisementInDatabase(){
 
@@ -46,7 +24,7 @@ public class AdvertisementInDatabase {
 
     /**
      * function to convert the advertisement to String, debugging purposes
-     * @return string containing all necesary data about the advertisement
+     * @return string containing all necessary data about the advertisement
      */
     @Override
     public String toString() {
@@ -61,7 +39,7 @@ public class AdvertisementInDatabase {
     }
 
     /**
-     *
+     * Setter constructor
      * @param CreatedBy Id of the advertiser
      * @param Title Title of the advertisement
      * @param Details Details of the advertisement
@@ -82,5 +60,4 @@ public class AdvertisementInDatabase {
         this.Longitude=Longitude;
         this.Latitude=Latitude;
     }
-
 }

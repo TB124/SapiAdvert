@@ -32,6 +32,8 @@ import java.util.regex.Pattern;
 /**
  * Main activity of the application
  * Searching and listing from the uploaded advertisements
+ * @author Bondor Tamas
+ * @author Kovacs Szabolcs
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private final String tag = "MainActivity";
@@ -59,10 +61,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //Listener
     private ValueEventListener profilePictureListener;
     /**
-     * Initialising the advity
-     * Setting up the firebase databse connection
+     * Initialising the activity
+     * Setting up the firebase database connection
      * Database Listeners setup
-     * @param savedInstanceState
+     * @param savedInstanceState saved instance
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -241,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * function to process clicks on the logout button ->logout
      * and on the profile picture->View Profile
-     * @param view
+     * @param view selected view
      */
     @Override
     public void onClick(View view) {

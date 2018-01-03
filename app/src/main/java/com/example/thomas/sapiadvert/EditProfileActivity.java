@@ -27,6 +27,8 @@ import com.google.firebase.storage.UploadTask;
  * This Activity will show the logged in users' profile, and give him the possibility
  * to edit the data. In this activity the user can list his own advertisements, change
  * his password, and go back to the main activity.
+ * @author Bondor Tamas
+ * @author Kovacs Szabolcs
  */
 public class EditProfileActivity extends Activity implements View.OnClickListener {
     private final String tag = "EditProfile Activity:";

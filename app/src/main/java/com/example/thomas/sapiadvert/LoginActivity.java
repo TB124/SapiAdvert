@@ -36,6 +36,8 @@ import com.google.firebase.auth.GoogleAuthProvider;
  * The Login Activity of the Application, it gives us three possibilities
  * Email login,Google login and guest login. It also gives us the option to reset
  * an account.
+ * @author Bondor Tamas
+ * @author Kovacs Szabolcs
  */
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private final String tag="LoginActivity";
@@ -184,7 +186,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     /**
-     * Google sign in, calling Googles' intent
+     * Google sign in, calling Google's intent
      */
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);

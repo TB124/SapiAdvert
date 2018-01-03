@@ -1,5 +1,6 @@
 package com.example.thomas.sapiadvert;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -23,6 +24,8 @@ import com.google.firebase.auth.FirebaseUser;
  * The view has three input fields (old password, new password and confirm password)
  * and two buttons (cancel and change).
  * The dialog will be displayed if the show() method of the class is called.
+ * @author Bondor Tamas
+ * @author Kovacs Szabolcs
  */
 public class ChangePassword extends Dialog implements View.OnClickListener {
     private static final String TAG = "ChangePassword";
@@ -70,6 +73,7 @@ public class ChangePassword extends Dialog implements View.OnClickListener {
      * check if it is valid, if any error occurs the password was incorrect
      * so display a message, otherwise change the password.
      */
+    @SuppressLint("SetTextI18n")
     private void changePassword(){
         String oldPW = oldPassword.getText().toString().trim();
         final String newPW = newPassword.getText().toString().trim();
@@ -95,6 +99,7 @@ public class ChangePassword extends Dialog implements View.OnClickListener {
 
         user.reauthenticate(credential)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {

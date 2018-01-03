@@ -23,6 +23,8 @@ import com.google.firebase.auth.FirebaseUser;
  * The view has one input field and two buttons. The user will type his email address
  * into the input field, and then clicks the Reset button in order to reset the password.
  * The dialog will be displayed if the show() method of the class is called.
+ * @author Bondor Tamas
+ * @author Kovacs Szabolcs
  */
 public class ForgotPassword extends Dialog implements View.OnClickListener {
     private static final String TAG = "ForgotPassword";
@@ -34,7 +36,7 @@ public class ForgotPassword extends Dialog implements View.OnClickListener {
 
     /**
      * Class Constructor
-     * @param context
+     * @param context context
      */
     ForgotPassword(Context context) {
         super (context);

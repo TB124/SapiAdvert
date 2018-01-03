@@ -15,10 +15,10 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
-/*
-Adapter for the recycler view in Main activity that hold the advertisements
-@author Bondor Tamas
-@author Kovacs Szabolcs
+/**
+ *Adapter for the recycler view in Main activity that hold the advertisements
+ * @author Bondor Tamas
+ * @author Kovacs Szabolcs
  */
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
@@ -69,7 +69,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         }
 
         /**
-         * Ataching onclick listener on profile picture and on the rest of the view
+         * Attaching onclick listener on profile picture and on the rest of the view
          * @param ad advertisement
          */
         public void bind(final Advertisement ad){

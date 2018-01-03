@@ -21,6 +21,8 @@ import java.util.List;
 
 /**
  * Activity to view the advertisements created by the curently logged in user
+ * @author Bondor Tamas
+ * @author Kovacs Szabolcs
  */
 public class ViewMyAdvertisementsActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth firebaseAuth;
@@ -36,8 +38,8 @@ public class ViewMyAdvertisementsActivity extends AppCompatActivity implements V
 
     /**
      * initialising the activity
-     * -firebase databse connection setup
-     * -firebase child listeners-> downloading the advertisement created by th curent user
+     * -firebase database connection setup
+     * -firebase child listeners-> downloading the advertisement created by th current user
      * @param savedInstanceState savedInstance
      */
     @Override

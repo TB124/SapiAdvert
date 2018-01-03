@@ -41,7 +41,7 @@ public class AdvertisementReadActivity extends AppCompatActivity implements OnMa
     /**
      * Initialising the activity
      * Reading the information about the advertisement from the intent
-     * Setting up listeners for the apropiate buttons,views
+     * Setting up listeners for the appropriate buttons,views
      * @param savedInstanceState Saved instance
      */
     @Override

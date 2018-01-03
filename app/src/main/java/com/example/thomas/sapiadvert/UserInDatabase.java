@@ -1,6 +1,8 @@
 package com.example.thomas.sapiadvert;
 /**
  * This class will contain all the data of a user.
+ * @author Bondor Tamas
+ * @author Kovacs Szabolcs
  */
 public class UserInDatabase {
     public String EmailAddress;
@@ -12,7 +14,7 @@ public class UserInDatabase {
     /**
      * Empty Constructor of the class
      */
-    UserInDatabase(){};
+    UserInDatabase(){}
 
     /**
      * Setter constructor.
@@ -28,5 +30,5 @@ public class UserInDatabase {
         this.LastName= LastName;
         this.PhoneNumber = PhoneNumber;
         this.ProfilePicture = ProfilePicture;
-    };
+    }
 }

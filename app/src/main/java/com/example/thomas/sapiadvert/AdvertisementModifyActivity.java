@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,12 +29,13 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 /**
- * Activity for modoifying an existing advertisement
+ * Activity for modifying an existing advertisement
  * @author Bondor Tamas
  * @author Kovacs Szabolcs
  */
 public class AdvertisementModifyActivity extends AppCompatActivity{
 
+    private final String tag="Ad-ModifyActivity";
     private static final int GALLERY_INTENT =123 ;
     private static final int PLACE_PICKER_REQUEST = 1;
     private AdvertisementMy advertisement;
@@ -53,8 +55,8 @@ public class AdvertisementModifyActivity extends AppCompatActivity{
 
 
     /**
-     * Initializing the advitiy
-     * Reading the informations about the advertisement from the intent
+     * Initializing the activity
+     * Reading the information about the advertisement from the intent
      * @param savedInstanceState Saved instances
      */
     @Override
@@ -129,7 +131,7 @@ public class AdvertisementModifyActivity extends AppCompatActivity{
                     startActivityForResult(builder.build(AdvertisementModifyActivity.this), PLACE_PICKER_REQUEST);
                 }
                 catch(Throwable ex){
-
+                    Log.e(tag, ex.toString());
                 }
             }
         });
@@ -149,11 +151,11 @@ public class AdvertisementModifyActivity extends AppCompatActivity{
                 advertisementInDatabase.Details=detailssEditText.getText().toString().trim();
 
                 if(TextUtils.isEmpty(advertisementInDatabase.Title)){
-                    Toast.makeText(AdvertisementModifyActivity.this,"Please enter a title !",Toast.LENGTH_LONG);
+                    Toast.makeText(AdvertisementModifyActivity.this,"Please enter a title !",Toast.LENGTH_LONG).show();
                     return;
                 }
                 if(TextUtils.isEmpty(advertisementInDatabase.Details)){
-                    Toast.makeText(AdvertisementModifyActivity.this,"Please enter some details !",Toast.LENGTH_LONG);
+                    Toast.makeText(AdvertisementModifyActivity.this,"Please enter some details !",Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -163,7 +165,7 @@ public class AdvertisementModifyActivity extends AppCompatActivity{
 
                 if(profileModified) {
                     if(mainImage==null){
-                        Toast.makeText(AdvertisementModifyActivity.this,"Please select a picture !",Toast.LENGTH_LONG);
+                        Toast.makeText(AdvertisementModifyActivity.this,"Please select a picture !",Toast.LENGTH_LONG).show();
                         return;
                     }
                     StorageReference filepath = firebaseStorage.child("AdvertisementPictures").child(advertisementKey);

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,12 +27,13 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 /**
- * Activity for creating and uploading new advertisement created by the curently logged in user
+ * Activity for creating and uploading new advertisement created by the currently logged in user
  * @author Bondor Tamas
  * @author Kovacs Szabolcs
  */
 public class AdvertisementUploadActivity extends AppCompatActivity {
 
+    private final String tag="Ad-UploadActivity";
     private static final int GALLERY_INTENT =123 ;
     private static final int PLACE_PICKER_REQUEST = 1;
     private EditText titleEditText;
@@ -79,12 +81,11 @@ AdvertisementInDatabase ad;
             public void onClick(View v) {
 
                 PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-
                 try {
                     startActivityForResult(builder.build(AdvertisementUploadActivity.this), PLACE_PICKER_REQUEST);
                 }
                 catch(Throwable ex){
-
+                    Log.e(tag, ex.toString());
                 }
             }
         });

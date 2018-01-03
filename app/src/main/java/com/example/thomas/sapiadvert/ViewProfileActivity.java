@@ -20,6 +20,8 @@ import com.google.firebase.database.ValueEventListener;
  * This activity's purpose is to show the data
  * of a user. The users ID is received though intent and then
  * loads the data from Firebase, with the help of the ID.
+ * @author Bondor Tamas
+ * @author Kovacs Szabolcs
  */
 public class ViewProfileActivity extends AppCompatActivity implements View.OnClickListener {
     private final String tag="ViewProfileActivity";

@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 /**
  * Class to represent an advertisement created by the user
+ * @author Bondor Tamas
+ * @author Kovacs Szabolcs
  */
 public class AdvertisementMy implements Parcelable {
     private String title;
@@ -14,7 +16,7 @@ public class AdvertisementMy implements Parcelable {
     private double latitude;
 
     /**
-     * funtion to create an advertisement from a parcel (creating advertisement from intent)
+     * function to create an advertisement from a parcel (creating advertisement from intent)
      * @param in parcel
      */
     protected AdvertisementMy(Parcel in) {
@@ -46,7 +48,7 @@ public class AdvertisementMy implements Parcelable {
     }
 
     /**
-     * setter for changin details
+     * setter for changing details
      * @param details new details
      */
     public void setDetails(String details) {
@@ -54,7 +56,7 @@ public class AdvertisementMy implements Parcelable {
     }
 
     /**
-     * setter for chaning the Uri to the main picture of the advertisement
+     * setter for changing the Uri to the main picture of the advertisement
      * @param mainPictureUri new Uri to the main picture of the advertisement
      */
     public void setMainPictureUri(String mainPictureUri) {
@@ -80,7 +82,7 @@ public class AdvertisementMy implements Parcelable {
     /**
      * Constructor
      * @param title title of the advertisement
-     * @param details detials of the advertisement
+     * @param details details of the advertisement
      * @param mainPictureUri uri to the main picture of the advertisement
      * @param longitude longitude information about the advertisement
      * @param latitude latitude information about the advertisement
@@ -130,7 +132,7 @@ public class AdvertisementMy implements Parcelable {
     }
 
     /**
-     * converting the advertisement to String for debugging purposess
+     * converting the advertisement to String for debugging purposes
      * @return return the String representing the advertisement
      */
     @Override
@@ -146,7 +148,7 @@ public class AdvertisementMy implements Parcelable {
 
     /**
      * dummy
-     * @return
+     * @return 0
      */
     @Override
     public int describeContents() {
@@ -155,8 +157,8 @@ public class AdvertisementMy implements Parcelable {
 
     /**
      * writing the advertisement into a parcel ( sending in intent)
-     * @param dest
-     * @param flags
+     * @param dest destination
+     * @param flags flags
      */
     @Override
     public void writeToParcel(Parcel dest, int flags) {

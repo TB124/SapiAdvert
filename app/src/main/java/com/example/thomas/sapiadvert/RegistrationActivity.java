@@ -32,6 +32,8 @@ import java.util.HashMap;
 /**
  * The Registration Activity, you can use this Activity to register to the Application.
  * It takes the data needed, and registers the User.
+ * @author Bondor Tamas
+ * @author Kovacs Szabolcs
  */
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int GALLERY_INTENT =3 ;
@@ -72,19 +74,19 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             // Start User activities --> MainActivity
             startMainActivity();
         }
-        registerButton = (Button) findViewById(R.id.registerButton);
-        emailInput = (EditText) findViewById(R.id.emailInput);
-        passwordInput = (EditText) findViewById(R.id.passwordInput);
-        signInTextView = (TextView) findViewById(R.id.signInTextView);
+        registerButton = findViewById(R.id.registerButton);
+        emailInput = findViewById(R.id.emailInput);
+        passwordInput = findViewById(R.id.passwordInput);
+        signInTextView = findViewById(R.id.signInTextView);
         progressDialog = new ProgressDialog(this);
         registerButton.setOnClickListener(this);
         signInTextView.setOnClickListener(this);
         ///
-        profilePictureInput=(ImageView) findViewById(R.id.profilePictureInput);
-        firstNameInput=(EditText) findViewById(R.id.firstNameInput);
-        lastNameInput=(EditText) findViewById(R.id.lastNameInput);
-        phoneNumberInput=(EditText) findViewById(R.id.phoneNumberInput);
-        confirmPasswordInput=(EditText) findViewById(R.id.confirmPasswordInput);
+        profilePictureInput= findViewById(R.id.profilePictureInput);
+        firstNameInput= findViewById(R.id.firstNameInput);
+        lastNameInput= findViewById(R.id.lastNameInput);
+        phoneNumberInput= findViewById(R.id.phoneNumberInput);
+        confirmPasswordInput= findViewById(R.id.confirmPasswordInput);
         profilePictureInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
