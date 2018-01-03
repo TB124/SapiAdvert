@@ -18,7 +18,7 @@
         android:id="@+id/searchTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/ad_read_profilePictureImageView"
+        android:layout_alignBottom="@+id/main_ac_profilePictureImageView"
         android:layout_toStartOf="@+id/addNewAdvertisementButton"
         android:imeOptions="actionSearch"
         android:ems="10"
@@ -26,7 +26,7 @@
         android:inputType="textPersonName" />
 
     <ImageView
-        android:id="@+id/ad_read_profilePictureImageView"
+        android:id="@+id/main_ac_profilePictureImageView"
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_alignParentEnd="true"
@@ -52,7 +52,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_above="@+id/advertisementRecylerView"
-        android:layout_toStartOf="@+id/ad_read_profilePictureImageView"
+        android:layout_toStartOf="@+id/main_ac_profilePictureImageView"
         android:text="@string/add" />
 
 </RelativeLayout>

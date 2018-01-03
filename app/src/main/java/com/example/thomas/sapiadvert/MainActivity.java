@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView addNewAdvertisementButton;
     private Button logOutButton;
 
+    //Listener
+    private ValueEventListener profilePictureListener;
     /**
      * Initialising the advity
      * Setting up the firebase databse connection
@@ -67,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // profile picture
-        profilePicture= findViewById(R.id.ad_read_profilePictureImageView);
+        profilePicture= findViewById(R.id.main_ac_profilePictureImageView);
         profilePicture.setOnClickListener(this);
         // Log out
         logOutButton=findViewById(R.id.logOutButton);
@@ -196,14 +198,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             addNewAdvertisementButton.setVisibility(View.GONE);
         }
         else{
-            databaseReference.child("Users").child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            profilePictureListener=new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     UserInDatabase u=dataSnapshot.getValue(UserInDatabase.class);
                     if (u != null) {
-                        Glide.with(MainActivity.this).load(u.ProfilePicture).into(profilePicture);
+                        Glide.with(getApplicationContext()).load(u.ProfilePicture).into(profilePicture);
                     } else {
-                        Glide.with(MainActivity.this).load(defaultProfilePicture).into(profilePicture);
+                        Glide.with(getApplicationContext()).load(defaultProfilePicture).into(profilePicture);
                     }
                 }
 
@@ -211,7 +213,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 public void onCancelled(DatabaseError databaseError) {
 
                 }
-            });
+            };
+            databaseReference.child("Users").child(currentUser.getUid()).addListenerForSingleValueEvent(profilePictureListener);
             profilePicture.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -230,6 +233,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        databaseReference.child("Users").child(currentUser.getUid()).removeEventListener(profilePictureListener);
+    }
     /**
      * function to process clicks on the logout button ->logout
      * and on the profile picture->View Profile
@@ -292,5 +300,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void updateUI(){
         adapter.notifyDataSetChanged();
+
     }
 }
