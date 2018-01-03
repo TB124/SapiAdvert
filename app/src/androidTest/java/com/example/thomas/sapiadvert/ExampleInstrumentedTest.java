@@ -123,7 +123,7 @@ public class ExampleInstrumentedTest {
     private void logIn(){
         logOut();
         onView(withId(R.id.login_ac_emailInput)).perform(clearText(), typeText(testEmail));
-        onView(withId(R.id.login_ac_passwordInput)).perform(clearText(), typeText(testPassword));
+        onView(withId(R.id.login_ac_passwordInput)).perform(closeSoftKeyboard(),clearText(), typeText(testPassword));
         setUp(MainActivity.class.getName());
         onView(withId(R.id.login_ac_loginButton)).perform(closeSoftKeyboard(),click());
         testOpen();
