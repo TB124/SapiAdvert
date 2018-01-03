@@ -53,7 +53,7 @@ public class AdvertisementReadActivity extends AppCompatActivity implements OnMa
         titleTextView=findViewById(R.id.ad_read_titleTextView);
         detailsTextView=findViewById(R.id.ad_read_detailsTextView);
         mainPictureImageView=findViewById(R.id.ad_read_mainPictureImageView);
-        profilePictureImageView=findViewById(R.id.ad_read_profilePictureImageView);
+        profilePictureImageView=findViewById(R.id.main_ac_profilePictureImageView);
         callButton=findViewById(R.id.ad_read_callButton);
 
         databaseReference= FirebaseDatabase.getInstance().getReference();
